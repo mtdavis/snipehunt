@@ -44,7 +44,7 @@ angular.module('snipehuntApp')
                     }
                     else
                     {
-                        row.push({});
+                        row.push({empty:true});
                     }
                 }
 
@@ -147,12 +147,30 @@ angular.module('snipehuntApp')
 
         this.toggleCage = function(rowNum, colNum)
         {
-            this.grid[rowNum][colNum].cage = !this.grid[rowNum][colNum].cage;
+            if(!this.snipesVisible)
+            {
+                var cell = this.grid[rowNum][colNum];
+                cell.cage = !cell.cage;
+
+                if(cell.cage)
+                {
+                    cell.mark = false;
+                }
+            }
         };
 
         this.toggleMark = function(rowNum, colNum)
         {
-            this.grid[rowNum][colNum].mark = !this.grid[rowNum][colNum].mark;
+            if(!this.snipesVisible)
+            {
+                var cell = this.grid[rowNum][colNum];
+                cell.mark = !cell.mark;
+
+                if(cell.mark)
+                {
+                    cell.cage = false;
+                }
+            }
         };
 
         this.revealSnipes = function()
