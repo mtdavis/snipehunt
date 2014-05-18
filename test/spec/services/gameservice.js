@@ -314,7 +314,7 @@ describe('Service: GameService', function()
         expect(GameService.grid[height - 1][beamCol].reflection).toBe(true);
     });
 
-    it("should register passthroughs", function()
+    it("should register passthroughs - from the north", function()
     {
         //assign 0 snipes.
         var width = 5;
@@ -328,29 +328,117 @@ describe('Service: GameService', function()
         expect(GameService.grid[height - 1][2].passedThrough).toBe(true);
         expect(GameService.grid[0][2].linkId).toBe(expectedLinkId);
         expect(GameService.grid[height - 1][2].linkId).toBe(expectedLinkId);
+    });
 
-        //from the east.
-        expectedLinkId = GameService.availableLinkIds[0];
+    it("should register passthroughs - from the south", function()
+    {
+        //assign 0 snipes.
+        var width = 5;
+        var height = 5;
+
+        GameService.startNewGame(height, width, 0);
+
+        var expectedLinkId = GameService.availableLinkIds[0];
+        GameService.turnOnLight(height - 1, 2);
+        expect(GameService.grid[height - 1][2].passedThrough).toBe(true);
+        expect(GameService.grid[0][2].passedThrough).toBe(true);
+        expect(GameService.grid[height - 1][2].linkId).toBe(expectedLinkId);
+        expect(GameService.grid[0][2].linkId).toBe(expectedLinkId);
+    });
+
+    it("should register passthroughs - from the east", function()
+    {
+        //assign 0 snipes.
+        var width = 5;
+        var height = 5;
+        GameService.startNewGame(height, width, 0);
+
+        var expectedLinkId = GameService.availableLinkIds[0];
         GameService.turnOnLight(2, width - 1);
         expect(GameService.grid[2][width - 1].passedThrough).toBe(true);
         expect(GameService.grid[2][0].passedThrough).toBe(true);
         expect(GameService.grid[2][width - 1].linkId).toBe(expectedLinkId);
         expect(GameService.grid[2][width - 1].linkId).toBe(expectedLinkId);
+    });
 
-        //from the south.
+    it("should register passthroughs - from the west", function()
+    {
+        //assign 0 snipes.
+        var width = 5;
+        var height = 5;
+        GameService.startNewGame(height, width, 0);
+
+        var expectedLinkId = GameService.availableLinkIds[0];
+        GameService.turnOnLight(2, 0);
+        expect(GameService.grid[2][0].passedThrough).toBe(true);
+        expect(GameService.grid[2][width - 1].passedThrough).toBe(true);
+        expect(GameService.grid[2][0].linkId).toBe(expectedLinkId);
+        expect(GameService.grid[2][width - 1].linkId).toBe(expectedLinkId);
+    });
+
+    it("should turn the beam correctly - vertically to horizontally", function()
+    {
+        //assign a snipe manually.
+        var width = 5;
+        var height = 5;
+        GameService.startNewGame(height, width, 0);
+        GameService.grid[2][2].snipe = true;
+
+        //from the north, turning west.
+        var expectedLinkId = GameService.availableLinkIds[0];
+        GameService.turnOnLight(0, 1);
+        expect(GameService.grid[0][1].linkId).toBe(expectedLinkId);
+        expect(GameService.grid[1][0].linkId).toBe(expectedLinkId);
+
+        //from the north, turning east.
         expectedLinkId = GameService.availableLinkIds[0];
-        GameService.turnOnLight(height - 1, 3);
-        expect(GameService.grid[height - 1][3].passedThrough).toBe(true);
-        expect(GameService.grid[0][3].passedThrough).toBe(true);
-        expect(GameService.grid[height - 1][3].linkId).toBe(expectedLinkId);
+        GameService.turnOnLight(0, 3);
         expect(GameService.grid[0][3].linkId).toBe(expectedLinkId);
+        expect(GameService.grid[1][4].linkId).toBe(expectedLinkId);
 
-        //from the west.
+        //from the south, turning west.
+        expectedLinkId = GameService.availableLinkIds[0];
+        GameService.turnOnLight(4, 1);
+        expect(GameService.grid[4][1].linkId).toBe(expectedLinkId);
+        expect(GameService.grid[3][0].linkId).toBe(expectedLinkId);
+
+        //from the south, turning east.
+        expectedLinkId = GameService.availableLinkIds[0];
+        GameService.turnOnLight(4, 3);
+        expect(GameService.grid[4][3].linkId).toBe(expectedLinkId);
+        expect(GameService.grid[3][4].linkId).toBe(expectedLinkId);
+    });
+
+    it("should turn the beam correctly - horizontally to vertically", function()
+    {
+        //assign a snipe manually.
+        var width = 5;
+        var height = 5;
+        GameService.startNewGame(height, width, 0);
+        GameService.grid[2][2].snipe = true;
+
+        //from the west, turning north.
+        var expectedLinkId = GameService.availableLinkIds[0];
+        GameService.turnOnLight(1, 0);
+        expect(GameService.grid[1][0].linkId).toBe(expectedLinkId);
+        expect(GameService.grid[0][1].linkId).toBe(expectedLinkId);
+
+        //from the west, turning south.
         expectedLinkId = GameService.availableLinkIds[0];
         GameService.turnOnLight(3, 0);
-        expect(GameService.grid[3][0].passedThrough).toBe(true);
-        expect(GameService.grid[3][width - 1].passedThrough).toBe(true);
         expect(GameService.grid[3][0].linkId).toBe(expectedLinkId);
-        expect(GameService.grid[3][width - 1].linkId).toBe(expectedLinkId);
+        expect(GameService.grid[4][1].linkId).toBe(expectedLinkId);
+
+        //from the east, turning north.
+        expectedLinkId = GameService.availableLinkIds[0];
+        GameService.turnOnLight(1, 4);
+        expect(GameService.grid[1][4].linkId).toBe(expectedLinkId);
+        expect(GameService.grid[0][3].linkId).toBe(expectedLinkId);
+
+        //from the east, turning south.
+        expectedLinkId = GameService.availableLinkIds[0];
+        GameService.turnOnLight(3, 4);
+        expect(GameService.grid[3][4].linkId).toBe(expectedLinkId);
+        expect(GameService.grid[4][3].linkId).toBe(expectedLinkId);
     });
 });

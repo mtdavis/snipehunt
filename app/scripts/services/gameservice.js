@@ -207,7 +207,19 @@ angular.module('snipehuntApp')
                             beam.sourceLight.reflection = true;
                             break;
                         }
-                        else if(nextCell.hasOwnProperty("used"))
+                        else if(nextTopCell.snipe)
+                        {
+                            //turn south.
+                            beam.horizontalDirection = 0;
+                            beam.verticalDirection = 1;
+                        }
+                        else if(nextBottomCell.snipe)
+                        {
+                            //turn north.
+                            beam.horizontalDirection = 0;
+                            beam.verticalDirection = -1;
+                        }
+                        else if(nextCell.hasOwnProperty("passedThrough"))
                         {
                             this.registerPassthrough(beam.sourceLight, nextCell);
                             break;
@@ -229,7 +241,19 @@ angular.module('snipehuntApp')
                             beam.sourceLight.reflection = true;
                             break;
                         }
-                        else if(nextCell.hasOwnProperty("used"))
+                        else if(nextLeftCell.snipe)
+                        {
+                            //turn east.
+                            beam.horizontalDirection = 1;
+                            beam.verticalDirection = 0;
+                        }
+                        else if(nextRightCell.snipe)
+                        {
+                            //turn west.
+                            beam.horizontalDirection = -1;
+                            beam.verticalDirection = 0;
+                        }
+                        else if(nextCell.hasOwnProperty("passedThrough"))
                         {
                             this.registerPassthrough(beam.sourceLight, nextCell);
                             break;
