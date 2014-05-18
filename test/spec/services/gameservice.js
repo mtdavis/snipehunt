@@ -265,7 +265,7 @@ describe('Service: GameService', function()
     {
         //assign a snipe manually.
         var width = 5;
-        var height = 4;
+        var height = 5;
         var snipeRow = 1;
         var snipeCol = 1;
         GameService.startNewGame(height, width, 0);
@@ -276,5 +276,41 @@ describe('Service: GameService', function()
 
         GameService.turnOnLight(snipeRow + 1, 0);
         expect(GameService.grid[snipeRow + 1][0].reflection).toBe(true);
+    });
+
+    it("should register a reflection when it's about to go between two snipes - horizontally", function()
+    {
+        //assign snipes manually.
+        var width = 5;
+        var height = 5;
+        var beamRow = 3;
+        var snipesCol = 3;
+        GameService.startNewGame(height, width, 0);
+        GameService.grid[beamRow - 1][snipesCol].snipe = true;
+        GameService.grid[beamRow + 1][snipesCol].snipe = true;
+
+        GameService.turnOnLight(beamRow, 0);
+        expect(GameService.grid[beamRow][0].reflection).toBe(true);
+
+        GameService.turnOnLight(beamRow, width - 1);
+        expect(GameService.grid[beamRow][width - 1].reflection).toBe(true);
+    });
+
+    it("should register a reflection when it's about to go between two snipes - vertically", function()
+    {
+        //assign snipes manually.
+        var width = 5;
+        var height = 5;
+        var beamCol = 3;
+        var snipesRow = 3;
+        GameService.startNewGame(height, width, 0);
+        GameService.grid[snipesRow][beamCol - 1].snipe = true;
+        GameService.grid[snipesRow][beamCol + 1].snipe = true;
+
+        GameService.turnOnLight(0, beamCol);
+        expect(GameService.grid[0][beamCol].reflection).toBe(true);
+
+        GameService.turnOnLight(height - 1, beamCol);
+        expect(GameService.grid[height - 1][beamCol].reflection).toBe(true);
     });
 });

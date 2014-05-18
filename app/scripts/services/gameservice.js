@@ -166,6 +166,38 @@ angular.module('snipehuntApp')
                             beam.colNum += beam.horizontalDirection;
                         }
                     }
+                    else if(beam.horizontalDirection !== 0)
+                    {
+                        var nextTopCell = this.grid[beam.rowNum - 1][beam.colNum + beam.horizontalDirection];
+                        var nextBottomCell = this.grid[beam.rowNum + 1][beam.colNum + beam.horizontalDirection];
+
+                        if(nextTopCell.snipe && nextBottomCell.snipe)
+                        {
+                            beam.sourceLight.reflection = true;
+                            break;
+                        }
+                        else
+                        {
+                            beam.rowNum += beam.verticalDirection;
+                            beam.colNum += beam.horizontalDirection;
+                        }
+                    }
+                    else if(beam.verticalDirection !== 0)
+                    {
+                        var nextLeftCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum - 1];
+                        var nextRightCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum + 1];
+
+                        if(nextLeftCell.snipe && nextRightCell.snipe)
+                        {
+                            beam.sourceLight.reflection = true;
+                            break;
+                        }
+                        else
+                        {
+                            beam.rowNum += beam.verticalDirection;
+                            beam.colNum += beam.horizontalDirection;
+                        }
+                    }
                     else
                     {
                         beam.rowNum += beam.verticalDirection;
