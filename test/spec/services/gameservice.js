@@ -313,4 +313,44 @@ describe('Service: GameService', function()
         GameService.turnOnLight(height - 1, beamCol);
         expect(GameService.grid[height - 1][beamCol].reflection).toBe(true);
     });
+
+    it("should register passthroughs", function()
+    {
+        //assign 0 snipes.
+        var width = 5;
+        var height = 5;
+        GameService.startNewGame(height, width, 0);
+
+        //from the north.
+        var expectedLinkId = GameService.availableLinkIds[0];
+        GameService.turnOnLight(0, 2);
+        expect(GameService.grid[0][2].passedThrough).toBe(true);
+        expect(GameService.grid[height - 1][2].passedThrough).toBe(true);
+        expect(GameService.grid[0][2].linkId).toBe(expectedLinkId);
+        expect(GameService.grid[height - 1][2].linkId).toBe(expectedLinkId);
+
+        //from the east.
+        expectedLinkId = GameService.availableLinkIds[0];
+        GameService.turnOnLight(2, width - 1);
+        expect(GameService.grid[2][width - 1].passedThrough).toBe(true);
+        expect(GameService.grid[2][0].passedThrough).toBe(true);
+        expect(GameService.grid[2][width - 1].linkId).toBe(expectedLinkId);
+        expect(GameService.grid[2][width - 1].linkId).toBe(expectedLinkId);
+
+        //from the south.
+        expectedLinkId = GameService.availableLinkIds[0];
+        GameService.turnOnLight(height - 1, 3);
+        expect(GameService.grid[height - 1][3].passedThrough).toBe(true);
+        expect(GameService.grid[0][3].passedThrough).toBe(true);
+        expect(GameService.grid[height - 1][3].linkId).toBe(expectedLinkId);
+        expect(GameService.grid[0][3].linkId).toBe(expectedLinkId);
+
+        //from the west.
+        expectedLinkId = GameService.availableLinkIds[0];
+        GameService.turnOnLight(3, 0);
+        expect(GameService.grid[3][0].passedThrough).toBe(true);
+        expect(GameService.grid[3][width - 1].passedThrough).toBe(true);
+        expect(GameService.grid[3][0].linkId).toBe(expectedLinkId);
+        expect(GameService.grid[3][width - 1].linkId).toBe(expectedLinkId);
+    });
 });

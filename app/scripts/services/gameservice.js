@@ -64,7 +64,37 @@ angular.module('snipehuntApp')
                     assignedSnipes++;
                 }
             }
+
+            //generate the shuffled link IDs.
+            this.availableLinkIds = [];
+            for(var i = 1; i <= 25; i++)
+            {
+                this.availableLinkIds.push(i);
+            }
+            shuffle(this.availableLinkIds);
         };
+
+        //from http://stackoverflow.com/a/6274398
+        function shuffle(array)
+        {
+            var counter = array.length, temp, index;
+
+            // While there are elements in the array
+            while (counter > 0) {
+                // Pick a random index
+                index = Math.floor(Math.random() * counter);
+
+                // Decrease counter by 1
+                counter--;
+
+                // And swap the last element with it
+                temp = array[counter];
+                array[counter] = array[index];
+                array[index] = temp;
+            }
+
+            return array;
+        }
 
         this.makeLight = function()
         {
@@ -169,11 +199,17 @@ angular.module('snipehuntApp')
                     else if(beam.horizontalDirection !== 0)
                     {
                         var nextTopCell = this.grid[beam.rowNum - 1][beam.colNum + beam.horizontalDirection];
+                        var nextCell = this.grid[beam.rowNum][beam.colNum + beam.horizontalDirection];
                         var nextBottomCell = this.grid[beam.rowNum + 1][beam.colNum + beam.horizontalDirection];
 
                         if(nextTopCell.snipe && nextBottomCell.snipe)
                         {
                             beam.sourceLight.reflection = true;
+                            break;
+                        }
+                        else if(nextCell.hasOwnProperty("used"))
+                        {
+                            this.registerPassthrough(beam.sourceLight, nextCell);
                             break;
                         }
                         else
@@ -185,11 +221,17 @@ angular.module('snipehuntApp')
                     else if(beam.verticalDirection !== 0)
                     {
                         var nextLeftCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum - 1];
+                        var nextCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum];
                         var nextRightCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum + 1];
 
                         if(nextLeftCell.snipe && nextRightCell.snipe)
                         {
                             beam.sourceLight.reflection = true;
+                            break;
+                        }
+                        else if(nextCell.hasOwnProperty("used"))
+                        {
+                            this.registerPassthrough(beam.sourceLight, nextCell);
                             break;
                         }
                         else
@@ -211,6 +253,19 @@ angular.module('snipehuntApp')
                 }
             }
         };
+
+        this.registerPassthrough = function(firstLight, secondLight)
+        {
+            var linkId = this.availableLinkIds[0];
+            this.availableLinkIds.splice(0, 1); //remove zero-th element
+
+            firstLight.used = true;
+            secondLight.used = true;
+            firstLight.passedThrough = true;
+            secondLight.passedThrough = true;
+            firstLight.linkId = linkId;
+            secondLight.linkId = linkId;
+        }
 
         this.toggleCage = function(rowNum, colNum)
         {

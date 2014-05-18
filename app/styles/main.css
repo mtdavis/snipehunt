@@ -44,6 +44,32 @@
     background-color:#dd0;
 }
 
+.link-id-1  { background-image:url("../images/dogs/afghan-hound.png"); }
+.link-id-2  { background-image:url("../images/dogs/australian-cattle-dog.png"); }
+.link-id-3  { background-image:url("../images/dogs/basset-hound.png"); }
+.link-id-4  { background-image:url("../images/dogs/boston-terrier.png"); }
+.link-id-5  { background-image:url("../images/dogs/bulldog.png"); }
+.link-id-6  { background-image:url("../images/dogs/cardigan-welsh-corgi.png"); }
+.link-id-7  { background-image:url("../images/dogs/chihuahua.png"); }
+.link-id-8  { background-image:url("../images/dogs/dachshund.png"); }
+.link-id-9  { background-image:url("../images/dogs/dalmatian.png"); }
+.link-id-10 { background-image:url("../images/dogs/doberman-pinscher.png"); }
+.link-id-11 { background-image:url("../images/dogs/english-foxhound.png"); }
+.link-id-12 { background-image:url("../images/dogs/german-shepherd.png"); }
+.link-id-13 { background-image:url("../images/dogs/golden-retriever.png"); }
+.link-id-14 { background-image:url("../images/dogs/irish-setter.png"); }
+.link-id-15 { background-image:url("../images/dogs/italian-greyhound.png"); }
+.link-id-16 { background-image:url("../images/dogs/jack-russell-terrier.png"); }
+.link-id-17 { background-image:url("../images/dogs/komondor.png"); }
+.link-id-18 { background-image:url("../images/dogs/mini-poodle.png"); }
+.link-id-19 { background-image:url("../images/dogs/pomeranian.png"); }
+.link-id-20 { background-image:url("../images/dogs/pug.png"); }
+.link-id-21 { background-image:url("../images/dogs/saint-bernard.png"); }
+.link-id-22 { background-image:url("../images/dogs/schnauzer.png"); }
+.link-id-23 { background-image:url("../images/dogs/scottish-terrier.png"); }
+.link-id-24 { background-image:url("../images/dogs/shiba-inu.png"); }
+.link-id-25 { background-image:url("../images/dogs/siberian-husky.png"); }
+
 @keyframes fadein
 {
     from
