@@ -41,7 +41,25 @@
 
 .reflection-true
 {
-    background-color:#dd0;
+    background-image:url("../images/arrow.png");
+}
+
+.grid .grid-row .grid-cell:last-child .reflection-true
+{
+    /* east side. */
+    transform:rotate(90deg);
+}
+
+.grid .grid-row:last-child .reflection-true
+{
+    /* south side. */
+    transform:rotate(180deg);
+}
+
+.grid .grid-row .grid-cell:first-child .reflection-true
+{
+    /* west side. */
+    transform:rotate(270deg);
 }
 
 .link-id-1  { background-image:url("../images/dogs/afghan-hound.png"); }
@@ -70,6 +88,12 @@
 .link-id-24 { background-image:url("../images/dogs/shiba-inu.png"); }
 .link-id-25 { background-image:url("../images/dogs/siberian-husky.png"); }
 
+.passed-through-true
+{
+    animation-duration: 1s;
+    animation-name: fadein;
+}
+
 @keyframes fadein
 {
     from
@@ -83,9 +107,25 @@
     }
 }
 
+@keyframes slidedown
+{
+    from
+    {
+        background-position:0px -100px;
+    }
+
+    to
+    {
+        background-position:0px 0px;
+    }
+}
+
 .cage-true
 {
     background-image:url("../images/cage.png");
+    animation-duration: 1s;
+    animation-name: slidedown;
+    background-repeat:no-repeat;
 }
 
 .mark-true
