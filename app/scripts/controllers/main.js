@@ -32,4 +32,11 @@ angular.module('snipehuntApp')
         {
             GameService.toggleMark(rowNum, colNum);
         };
+
+        this.turnOnLight = function(rowNum, colNum)
+        {
+            GameService.turnOnLight(rowNum, colNum);
+        };
+
+        this.startNewGame();
     });

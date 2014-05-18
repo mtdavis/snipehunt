@@ -132,6 +132,40 @@ angular.module('snipehuntApp')
                         beam.sourceLight.hit = true;
                         break;
                     }
+                    else if(beam.rowNum === 0 || beam.rowNum === this.gridHeight - 1)
+                    {
+                        //currently outside the grid, check for a snipe to the immediate left/right.
+                        var nextLeftCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum - 1];
+                        var nextRightCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum + 1];
+
+                        if(nextLeftCell.snipe || nextRightCell.snipe)
+                        {
+                            beam.sourceLight.reflection = true;
+                            break;
+                        }
+                        else
+                        {
+                            beam.rowNum += beam.verticalDirection;
+                            beam.colNum += beam.horizontalDirection;
+                        }
+                    }
+                    else if(beam.colNum === 0 || beam.colNum === this.gridWidth - 1)
+                    {
+                        //currently outside the grid, check for a snipe to the immediate left/right.
+                        var nextTopCell = this.grid[beam.rowNum - 1][beam.colNum + beam.horizontalDirection];
+                        var nextBottomCell = this.grid[beam.rowNum + 1][beam.colNum + beam.horizontalDirection];
+
+                        if(nextTopCell.snipe || nextBottomCell.snipe)
+                        {
+                            beam.sourceLight.reflection = true;
+                            break;
+                        }
+                        else
+                        {
+                            beam.rowNum += beam.verticalDirection;
+                            beam.colNum += beam.horizontalDirection;
+                        }
+                    }
                     else
                     {
                         beam.rowNum += beam.verticalDirection;
@@ -140,6 +174,7 @@ angular.module('snipehuntApp')
                 }
                 catch(ex)
                 {
+                    //this is temporary.  should be gone in the final logic.
                     break;
                 }
             }

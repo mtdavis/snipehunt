@@ -34,6 +34,16 @@
     animation-name: fadein;
 }
 
+.hit-true
+{
+    background-color:#00d;
+}
+
+.reflection-true
+{
+    background-color:#dd0;
+}
+
 @keyframes fadein
 {
     from

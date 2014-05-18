@@ -260,4 +260,21 @@ describe('Service: GameService', function()
             expect(GameService.grid[rowNum][0].hit).toBe(rowNum === snipeRow);
         }
     });
+
+    it("should register a reflection for a snipe on the edge", function()
+    {
+        //assign a snipe manually.
+        var width = 5;
+        var height = 4;
+        var snipeRow = 1;
+        var snipeCol = 1;
+        GameService.startNewGame(height, width, 0);
+        GameService.grid[snipeRow][snipeCol].snipe = true;
+
+        GameService.turnOnLight(0, snipeCol + 1);
+        expect(GameService.grid[0][snipeCol + 1].reflection).toBe(true);
+
+        GameService.turnOnLight(snipeRow + 1, 0);
+        expect(GameService.grid[snipeRow + 1][0].reflection).toBe(true);
+    });
 });
