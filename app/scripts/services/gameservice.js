@@ -8,6 +8,7 @@ angular.module('snipehuntApp')
             this.gridHeight = height;
             this.gridWidth = width;
             this.snipesVisible = false;
+            this.freshGame = true;
 
             //create the grid.
             this.grid = [];
@@ -72,6 +73,8 @@ angular.module('snipehuntApp')
                 this.availableLinkIds.push(i);
             }
             shuffle(this.availableLinkIds);
+
+            this.availableCages = snipes;
         };
 
         //from http://stackoverflow.com/a/6274398
@@ -109,8 +112,10 @@ angular.module('snipehuntApp')
 
         this.turnOnLight = function(rowNum, colNum)
         {
+            this.freshGame = false;
+
             var light = this.grid[rowNum][colNum];
-            if(!light.used)
+            if(!light.used && !this.snipesVisible)
             {
                 light.used = true;
 
@@ -293,13 +298,20 @@ angular.module('snipehuntApp')
 
         this.toggleCage = function(rowNum, colNum)
         {
+            this.freshGame = false;
+
             if(!this.snipesVisible)
             {
                 var cell = this.grid[rowNum][colNum];
-                cell.cage = !cell.cage;
-
                 if(cell.cage)
                 {
+                    this.availableCages++;
+                    cell.cage = false;
+                }
+                else if(!cell.cage && this.availableCages > 0)
+                {
+                    this.availableCages--;
+                    cell.cage = true;
                     cell.mark = false;
                 }
             }
@@ -307,20 +319,24 @@ angular.module('snipehuntApp')
 
         this.toggleMark = function(rowNum, colNum)
         {
+            this.freshGame = false;
+
             if(!this.snipesVisible)
             {
                 var cell = this.grid[rowNum][colNum];
                 cell.mark = !cell.mark;
 
-                if(cell.mark)
+                if(cell.mark && cell.cage)
                 {
                     cell.cage = false;
+                    this.availableCages++;
                 }
             }
         };
 
         this.revealSnipes = function()
         {
+            this.freshGame = false;
             this.snipesVisible = true;
         };
     });

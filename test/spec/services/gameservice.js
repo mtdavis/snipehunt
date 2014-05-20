@@ -157,6 +157,32 @@ describe('Service: GameService', function()
         expect(GameService.grid[2][3].cage).toBe(true);
     });
 
+    it("should count cages correctly", function()
+    {
+        GameService.startNewGame(5, 5, 2);
+
+        expect(GameService.availableCages).toBe(2);
+
+        GameService.toggleCage(1, 1);
+        expect(GameService.availableCages).toBe(1);
+
+        GameService.toggleCage(1, 1);
+        expect(GameService.availableCages).toBe(2);
+
+        GameService.toggleCage(1, 1);
+        GameService.toggleCage(1, 2);
+        expect(GameService.availableCages).toBe(0);
+
+        //can't exceed the number of cages.
+        GameService.toggleCage(1, 3);
+        expect(GameService.availableCages).toBe(0);
+        expect(GameService.grid[1][3].cage).toBe(false);
+
+        //adding a mark (which clears a cage) behaves properly.
+        GameService.toggleMark(1, 1);
+        expect(GameService.availableCages).toBe(1);
+    });
+
     it("should reveal the snipes when told to", function()
     {
         GameService.startNewGame(5, 5, 4);
@@ -168,7 +194,7 @@ describe('Service: GameService', function()
         expect(GameService.snipesVisible).toBe(true);
     });
 
-    it("shouldn't toggle cages or marks after the game is over", function()
+    it("shouldn't toggle cages/marks/lights after the game is over", function()
     {
         GameService.startNewGame(5, 5, 4);
 
@@ -179,6 +205,9 @@ describe('Service: GameService', function()
 
         GameService.toggleMark(2, 3);
         expect(GameService.grid[2][3].mark).toBe(false);
+
+        GameService.turnOnLight(0, 1);
+        expect(GameService.grid[0][1].used).toBe(false);
 
     })
 

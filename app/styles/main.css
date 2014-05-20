@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+.fresh-game-true .grid-cell-member
+{
+    animation-duration: 0s;
+}
+
 .grid
 {
     line-height:0;
@@ -17,7 +22,7 @@
     width:100px;
     height:100px;
     margin:5px;
-    background-color:#ddd;
+    border-radius:5px;
 }
 
 .grid-cell-member
@@ -25,6 +30,7 @@
     position:absolute;
     width:100%;
     height:100%;
+    border-radius:5px;
 }
 
 .snipes-visible-true .snipe-true
@@ -32,6 +38,11 @@
     background-image:url("../images/snipe.png");
     animation-duration: 3s;
     animation-name: fadein;
+}
+
+.field
+{
+    background-image:url("../images/field.png");
 }
 
 .hit-true
@@ -42,6 +53,8 @@
 .reflection-true
 {
     background-image:url("../images/arrow.png");
+    animation-duration: 1s;
+    animation-name: fadein;
 }
 
 .grid .grid-row .grid-cell:last-child .reflection-true
@@ -107,6 +120,19 @@
     }
 }
 
+@keyframes fadeout
+{
+    from
+    {
+        opacity:1;
+    }
+
+    to
+    {
+        opacity:0;
+    }
+}
+
 @keyframes slidedown
 {
     from
@@ -120,6 +146,19 @@
     }
 }
 
+@keyframes slideup
+{
+    from
+    {
+        background-position:0px 0px;
+    }
+
+    to
+    {
+        background-position:0px -100px;
+    }
+}
+
 .cage-true
 {
     background-image:url("../images/cage.png");
@@ -128,7 +167,27 @@
     background-repeat:no-repeat;
 }
 
+.cage-false
+{
+    background-image:url("../images/cage.png");
+    background-position:0px -100px;
+    animation-duration: 1s;
+    animation-name: slideup;
+    background-repeat:no-repeat;
+}
+
 .mark-true
 {
-    background-color:#eaa;
+    background-image:url("../images/mark.png");
+    opacity:1;
+    animation-duration: 1s;
+    animation-name: fadein;
+}
+
+.mark-false
+{
+    background-image:url("../images/mark.png");
+    opacity:0;
+    animation-duration: 1s;
+    animation-name: fadeout;
 }

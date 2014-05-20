@@ -23,6 +23,16 @@ angular.module('snipehuntApp')
             return GameService.snipesVisible;
         };
 
+        this.getFreshGame = function()
+        {
+            return GameService.freshGame;
+        };
+
+        this.getAvailableCages = function()
+        {
+            return GameService.availableCages;
+        };
+
         this.toggleCage = function(rowNum, colNum)
         {
             GameService.toggleCage(rowNum, colNum);
