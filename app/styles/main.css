@@ -45,11 +45,6 @@
     background-image:url("../images/field.png");
 }
 
-.hit-true
-{
-    background-color:#00d;
-}
-
 .reflection-true
 {
     background-image:url("../images/arrow.png");
@@ -165,6 +160,8 @@
     animation-duration: 1s;
     animation-name: slidedown;
     background-repeat:no-repeat;
+
+    cursor:pointer;
 }
 
 .cage-false
@@ -174,6 +171,8 @@
     animation-duration: 1s;
     animation-name: slideup;
     background-repeat:no-repeat;
+
+    cursor:pointer;
 }
 
 .mark-true
@@ -182,6 +181,8 @@
     opacity:1;
     animation-duration: 1s;
     animation-name: fadein;
+
+    cursor:pointer;
 }
 
 .mark-false
@@ -190,4 +191,28 @@
     opacity:0;
     animation-duration: 1s;
     animation-name: fadeout;
+
+    cursor:pointer;
+}
+
+.used-true
+{
+    background-image:url("../images/huh.png");
+    opacity:0;
+    animation-duration: 0.1s;
+    animation-name: fadeout;
+}
+
+.used-false
+{
+    background-image:url("../images/huh.png");
+
+    cursor:pointer;
+}
+
+.hit-true
+{
+    background-image:url("../images/hit.png");
+    animation-duration: 1s;
+    animation-name: fadein;
 }

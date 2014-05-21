@@ -27,7 +27,11 @@
             </div>
 
             <div ng-if="cell.hasOwnProperty('hit')"
-                class="grid-cell-member hit-{{cell.hit}} reflection-{{cell.reflection}} passed-through-{{cell.passedThrough}} link-id-{{cell.linkId}}"
+                class="grid-cell-member hit-{{cell.hit}} reflection-{{cell.reflection}} passed-through-{{cell.passedThrough}} link-id-{{cell.linkId}}">
+            </div>
+
+            <div ng-if="cell.hasOwnProperty('used')"
+                class="grid-cell-member used-{{cell.used}}"
                 ng-click="ctrl.turnOnLight(rowNum, colNum)">
             </div>
 
