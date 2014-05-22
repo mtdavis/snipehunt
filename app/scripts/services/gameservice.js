@@ -9,6 +9,8 @@ angular.module('snipehuntApp')
             this.gridWidth = width;
             this.snipesVisible = false;
             this.freshGame = true;
+            this.message = "Started new game.";
+            this.caughtAll = false;
 
             //create the grid.
             this.grid = [];
@@ -157,6 +159,19 @@ angular.module('snipehuntApp')
                 }
 
                 this.resolveBeam(beam);
+
+                if(light.hit)
+                {
+                    this.message = "Hit a snipe!";
+                }
+                else if(light.passedThrough)
+                {
+                    this.message = "Passed through."
+                }
+                else if(light.reflection)
+                {
+                    this.message = "Reflected!"
+                }
             }
         };
 
@@ -326,5 +341,27 @@ angular.module('snipehuntApp')
         {
             this.freshGame = false;
             this.snipesVisible = true;
+
+            this.caughtAll = true;
+            for(var row = 1; row < this.gridHeight - 1; row++)
+            {
+                for(var col = 1; col < this.gridWidth - 1; col++)
+                {
+                    var cell = this.grid[row][col];
+                    if(cell.snipe)
+                    {
+                        this.caughtAll = this.caughtAll && cell.cage;
+                    }
+                }
+            }
+
+            if(this.caughtAll)
+            {
+                this.message = "Congratulations!";
+            }
+            else
+            {
+                this.message = "Better luck next time!";
+            }
         };
     });
