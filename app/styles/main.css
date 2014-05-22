@@ -1,3 +1,26 @@
+@font-face
+{
+    font-family: 'Tangerine';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Tangerine'), url(http://themes.googleusercontent.com/static/fonts/tangerine/v4/HGfsyCL5WASpHOFnouG-RD8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+}
+
+body
+{
+    background:#ede8d7 url("../images/paper.jpg");
+    color:#222;
+    font-family:'Tangerine', sans-serif;
+    font-size:32px;
+    text-align:center;
+}
+
+button
+{
+    font-family:'Tangerine', sans-serif;
+    font-size:32px;
+}
+
 *, *:before, *:after
 {
     -moz-box-sizing: border-box;
@@ -215,4 +238,37 @@
     background-image:url("../images/hit.png");
     animation-duration: 1s;
     animation-name: fadein;
+}
+
+.message
+{
+    margin:0;
+}
+
+.message.snipes-visible-true.caught-all-true
+{
+    animation-duration: 3s;
+    animation-name: fadein;
+}
+
+.message.snipes-visible-true.caught-all-false
+{
+    animation-duration: 3s;
+    animation-name: fadein;
+}
+
+.fancy-box
+{
+    display: inline-block;
+    text-align:center;
+    padding:10px;
+    margin:10px;
+    width:300px;
+
+    border-style: solid;
+    border-width: 30px;
+    -moz-border-image: url("../images/frame.png") 105 105 round;
+    -webkit-border-image: url("../images/frame.png") 105 105 round;
+    -o-border-image: url("../images/frame.png") 105 105 round;
+    border-image: url("../images/frame.png") 105 105 fill round;
 }

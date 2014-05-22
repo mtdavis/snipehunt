@@ -1,44 +1,50 @@
-<button ng-click="ctrl.startNewGame()">New Game</button>
+<div class="wrapper">
+    <button ng-click="ctrl.startNewGame()">New Game</button>
 
-<button ng-click="ctrl.revealSnipes()" ng-if="!ctrl.getSnipesVisible()">Reveal Snipes</button>
+    <div class="fancy-box">
+        <p class="message snipes-visible-{{ctrl.getSnipesVisible()}} caught-all-{{ctrl.getSnipesVisible()}}">{{ctrl.getMessage()}}</p>
+        <p class="message">Cages remaining: {{ctrl.getAvailableCages()}}</p>
+    </div>
 
-<p><img src="images/cage.png" alt="Cages"/> x {{ctrl.getAvailableCages()}}</p>
+    <button ng-click="ctrl.revealSnipes()" ng-disabled="ctrl.getSnipesVisible()">Reveal Snipes</button>
+</div>
 
-<div class="grid snipes-visible-{{ctrl.getSnipesVisible()}} fresh-game-{{ctrl.getFreshGame()}}">
-    <div class="grid-row" ng-repeat="(rowNum, row) in ctrl.getGrid()">
-        <div class="grid-cell" ng-repeat="(colNum, cell) in row">
+<div class="wrapper">
+    <div class="grid snipes-visible-{{ctrl.getSnipesVisible()}} fresh-game-{{ctrl.isFreshGame()}}">
+        <div class="grid-row" ng-repeat="(rowNum, row) in ctrl.getGrid()">
+            <div class="grid-cell" ng-repeat="(colNum, cell) in row">
 
-            <div ng-if="cell.isAField"
-                class="grid-cell-member field">
+                <div ng-if="cell.isAField"
+                    class="grid-cell-member field">
+                </div>
+
+                <div ng-if="cell.isAField"
+                    class="grid-cell-member snipe-{{cell.snipe}}">
+                </div>
+
+                <div ng-if="cell.isAField"
+                    class="grid-cell-member cage-{{cell.cage}}">
+                </div>
+
+                <div ng-if="cell.isAField"
+                    class="grid-cell-member mark-{{cell.mark}}"
+                    ng-click="ctrl.toggleCage(rowNum, colNum)"
+                    ng-right-click="ctrl.toggleMark(rowNum, colNum)">
+                </div>
+
+                <div ng-if="cell.isALight"
+                    class="grid-cell-member hit-{{cell.hit}} reflection-{{cell.reflection}} passed-through-{{cell.passedThrough}} link-id-{{cell.linkId}}">
+                </div>
+
+                <div ng-if="cell.isALight"
+                    class="grid-cell-member used-{{cell.used}}"
+                    ng-click="ctrl.turnOnLight(rowNum, colNum)">
+                </div>
+
+                <div ng-if="cell.isEmpty"
+                    class="grid-cell-member">
+                </div>
             </div>
-
-            <div ng-if="cell.isAField"
-                class="grid-cell-member snipe-{{cell.snipe}}">
-            </div>
-
-            <div ng-if="cell.isAField"
-                class="grid-cell-member cage-{{cell.cage}}">
-            </div>
-
-            <div ng-if="cell.isAField"
-                class="grid-cell-member mark-{{cell.mark}}"
-                ng-click="ctrl.toggleCage(rowNum, colNum)"
-                ng-right-click="ctrl.toggleMark(rowNum, colNum)">
-            </div>
-
-            <div ng-if="cell.isALight"
-                class="grid-cell-member hit-{{cell.hit}} reflection-{{cell.reflection}} passed-through-{{cell.passedThrough}} link-id-{{cell.linkId}}">
-            </div>
-
-            <div ng-if="cell.isALight"
-                class="grid-cell-member used-{{cell.used}}"
-                ng-click="ctrl.turnOnLight(rowNum, colNum)">
-            </div>
-
-            <div ng-if="cell.isEmpty"
-                class="grid-cell-member">
-            </div>
-
         </div>
     </div>
 </div>

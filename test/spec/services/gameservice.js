@@ -472,4 +472,21 @@ describe('Service: GameService', function()
         expect(GameService.grid[3][4].linkId).toBe(expectedLinkId);
         expect(GameService.grid[4][3].linkId).toBe(expectedLinkId);
     });
+
+    it("should detect whether the user won or lost", function()
+    {
+        GameService.startNewGame(4, 4, 4);
+
+        GameService.revealSnipes();
+        expect(GameService.caughtAll).toBe(false);
+
+        GameService.startNewGame(4, 4, 4);
+        GameService.toggleCage(1, 1);
+        GameService.toggleCage(1, 2);
+        GameService.toggleCage(2, 1);
+        GameService.toggleCage(2, 2);
+
+        GameService.revealSnipes();
+        expect(GameService.caughtAll).toBe(true);
+    });
 });
