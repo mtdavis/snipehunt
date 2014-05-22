@@ -13,46 +13,51 @@ angular.module('snipehuntApp')
             //create the grid.
             this.grid = [];
 
+            for(var rowNum = 0; rowNum < height; rowNum++)
+            {
+                this.grid.push([]);
+            }
+
             var northRow = 0;
             var southRow = height - 1;
             var westCol = 0;
             var eastCol = width - 1;
 
-            for(var rowNum = 0; rowNum < height; rowNum++)
+            //add the lights for the north and south rows.
+            for(var col = 1; col < eastCol; col++)
             {
-                var row = [];
-
-                for(var colNum = 0; colNum < width; colNum++)
-                {
-                    if(westCol < colNum && colNum < eastCol)
-                    {
-                        if(rowNum === northRow || rowNum === southRow)
-                        {
-                            row.push(this.makeLight());
-                        }
-                        else
-                        {
-                            row.push({
-                                snipe:false,
-                                cage:false,
-                                mark:false
-                            });
-                        }
-                    }
-                    else if(northRow < rowNum && rowNum < southRow)
-                    {
-                        row.push(this.makeLight());
-                    }
-                    else
-                    {
-                        row.push({empty:true});
-                    }
-                }
-
-                this.grid.push(row);
+                this.grid[northRow][col] = this.makeLight();
+                this.grid[southRow][col] = this.makeLight();
             }
 
-            //assign the snipes to random locations in the grid.
+            //add the lights for the west and east columns.
+            for(var row = 1; row < southRow; row++)
+            {
+                this.grid[row][westCol] = this.makeLight();
+                this.grid[row][eastCol] = this.makeLight();
+            }
+
+            //add the field cells in the middle.
+            for(var row = 1; row < southRow; row++)
+            {
+                for(var col = 1; col < eastCol; col++)
+                {
+                    this.grid[row][col] = {
+                        isAField:true,
+                        snipe:false,
+                        cage:false,
+                        mark:false
+                    };
+                }
+            }
+
+            //add the empty cells in the corners.
+            this.grid[northRow][westCol] = {isEmpty:true};
+            this.grid[northRow][eastCol] = {isEmpty:true};
+            this.grid[southRow][westCol] = {isEmpty:true};
+            this.grid[southRow][eastCol] = {isEmpty:true};
+
+            //assign the snipes to random locations in the field.
             var assignedSnipes = 0;
             while(assignedSnipes < snipes)
             {
@@ -102,6 +107,7 @@ angular.module('snipehuntApp')
         this.makeLight = function()
         {
             return {
+                isALight:true,
                 used:false,
                 hit:false,
                 reflection:false,
@@ -156,131 +162,113 @@ angular.module('snipehuntApp')
 
         this.resolveBeam = function(beam)
         {
-            while(true)
+            var resolved = false;
+
+            while(!resolved)
             {
-                try
+                var nextCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum + beam.horizontalDirection];
+
+                if(nextCell.snipe)
                 {
-                    var nextCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum + beam.horizontalDirection];
-
-                    if(nextCell.snipe)
-                    {
-                        beam.sourceLight.hit = true;
-                        break;
-                    }
-                    else if(beam.rowNum === 0 || beam.rowNum === this.gridHeight - 1)
-                    {
-                        //currently outside the grid, check for a snipe to the immediate left/right.
-                        var nextLeftCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum - 1];
-                        var nextRightCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum + 1];
-
-                        if(nextLeftCell.snipe || nextRightCell.snipe)
-                        {
-                            beam.sourceLight.reflection = true;
-                            break;
-                        }
-                        else
-                        {
-                            beam.rowNum += beam.verticalDirection;
-                            beam.colNum += beam.horizontalDirection;
-                        }
-                    }
-                    else if(beam.colNum === 0 || beam.colNum === this.gridWidth - 1)
-                    {
-                        //currently outside the grid, check for a snipe to the immediate left/right.
-                        var nextTopCell = this.grid[beam.rowNum - 1][beam.colNum + beam.horizontalDirection];
-                        var nextBottomCell = this.grid[beam.rowNum + 1][beam.colNum + beam.horizontalDirection];
-
-                        if(nextTopCell.snipe || nextBottomCell.snipe)
-                        {
-                            beam.sourceLight.reflection = true;
-                            break;
-                        }
-                        else
-                        {
-                            beam.rowNum += beam.verticalDirection;
-                            beam.colNum += beam.horizontalDirection;
-                        }
-                    }
-                    else if(beam.horizontalDirection !== 0)
-                    {
-                        var nextTopCell = this.grid[beam.rowNum - 1][beam.colNum + beam.horizontalDirection];
-                        var nextCell = this.grid[beam.rowNum][beam.colNum + beam.horizontalDirection];
-                        var nextBottomCell = this.grid[beam.rowNum + 1][beam.colNum + beam.horizontalDirection];
-
-                        if(nextTopCell.snipe && nextBottomCell.snipe)
-                        {
-                            beam.sourceLight.reflection = true;
-                            break;
-                        }
-                        else if(nextTopCell.snipe)
-                        {
-                            //turn south.
-                            beam.horizontalDirection = 0;
-                            beam.verticalDirection = 1;
-                        }
-                        else if(nextBottomCell.snipe)
-                        {
-                            //turn north.
-                            beam.horizontalDirection = 0;
-                            beam.verticalDirection = -1;
-                        }
-                        else if(nextCell.hasOwnProperty("passedThrough"))
-                        {
-                            this.registerPassthrough(beam.sourceLight, nextCell);
-                            break;
-                        }
-                        else
-                        {
-                            beam.rowNum += beam.verticalDirection;
-                            beam.colNum += beam.horizontalDirection;
-                        }
-                    }
-                    else if(beam.verticalDirection !== 0)
-                    {
-                        var nextLeftCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum - 1];
-                        var nextCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum];
-                        var nextRightCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum + 1];
-
-                        if(nextLeftCell.snipe && nextRightCell.snipe)
-                        {
-                            beam.sourceLight.reflection = true;
-                            break;
-                        }
-                        else if(nextLeftCell.snipe)
-                        {
-                            //turn east.
-                            beam.horizontalDirection = 1;
-                            beam.verticalDirection = 0;
-                        }
-                        else if(nextRightCell.snipe)
-                        {
-                            //turn west.
-                            beam.horizontalDirection = -1;
-                            beam.verticalDirection = 0;
-                        }
-                        else if(nextCell.hasOwnProperty("passedThrough"))
-                        {
-                            this.registerPassthrough(beam.sourceLight, nextCell);
-                            break;
-                        }
-                        else
-                        {
-                            beam.rowNum += beam.verticalDirection;
-                            beam.colNum += beam.horizontalDirection;
-                        }
-                    }
-                    else
-                    {
-                        beam.rowNum += beam.verticalDirection;
-                        beam.colNum += beam.horizontalDirection;
-                    }
+                    beam.sourceLight.hit = true;
+                    resolved = true;
                 }
-                catch(ex)
+                else if(nextCell.isALight)
                 {
-                    //this is temporary.  should be gone in the final logic.
-                    break;
+                    this.registerPassthrough(beam.sourceLight, nextCell);
+                    resolved = true;
+                }
+                else if(beam.horizontalDirection !== 0)
+                {
+                    resolved = this.iterateBeamMovingHorizontally(beam);
+                }
+                else if(beam.verticalDirection !== 0)
+                {
+                    resolved = this.iterateBeamMovingVertically(beam);
                 }
             }
+        };
+
+        this.iterateBeamMovingHorizontally = function(beam)
+        {
+            var resolved = false;
+            var nextTopCell = this.grid[beam.rowNum - 1][beam.colNum + beam.horizontalDirection];
+            var nextCell = this.grid[beam.rowNum][beam.colNum + beam.horizontalDirection];
+            var nextBottomCell = this.grid[beam.rowNum + 1][beam.colNum + beam.horizontalDirection];
+
+            if((beam.colNum === 0 || beam.colNum === this.gridWidth - 1) &&
+                (nextTopCell.snipe || nextBottomCell.snipe))
+            {
+                //currently outside the grid on the east or west,
+                //with a snipe immediately above/below the next cell.
+                beam.sourceLight.reflection = true;
+                resolved = true;
+            }
+            else if(nextTopCell.snipe && nextBottomCell.snipe)
+            {
+                beam.sourceLight.reflection = true;
+                resolved = true;
+            }
+            else if(nextTopCell.snipe)
+            {
+                //turn south.
+                beam.horizontalDirection = 0;
+                beam.verticalDirection = 1;
+            }
+            else if(nextBottomCell.snipe)
+            {
+                //turn north.
+                beam.horizontalDirection = 0;
+                beam.verticalDirection = -1;
+            }
+            else
+            {
+                beam.rowNum += beam.verticalDirection;
+                beam.colNum += beam.horizontalDirection;
+            }
+
+            return resolved;
+        };
+
+        this.iterateBeamMovingVertically = function(beam)
+        {
+            var resolved = false;
+            var nextLeftCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum - 1];
+            var nextCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum];
+            var nextRightCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum + 1];
+
+            if((beam.rowNum === 0 || beam.rowNum === this.gridHeight - 1) &&
+                (nextLeftCell.snipe || nextRightCell.snipe))
+            {
+                //currently outside the grid on the north or south,
+                //with a snipe immediately left/right to the next cell.
+                beam.sourceLight.reflection = true;
+                resolved = true;
+            }
+            else if(nextLeftCell.snipe && nextRightCell.snipe)
+            {
+                beam.sourceLight.reflection = true;
+                resolved = true;
+            }
+            else if(nextLeftCell.snipe)
+            {
+                //turn east.
+                beam.horizontalDirection = 1;
+                beam.verticalDirection = 0;
+            }
+            else if(nextRightCell.snipe)
+            {
+                //turn west.
+                beam.horizontalDirection = -1;
+                beam.verticalDirection = 0;
+            }
+            else
+            {
+                beam.rowNum += beam.verticalDirection;
+                beam.colNum += beam.horizontalDirection;
+            }
+
+            return resolved;
         };
 
         this.registerPassthrough = function(firstLight, secondLight)
@@ -294,7 +282,7 @@ angular.module('snipehuntApp')
             secondLight.passedThrough = true;
             firstLight.linkId = linkId;
             secondLight.linkId = linkId;
-        }
+        };
 
         this.toggleCage = function(rowNum, colNum)
         {

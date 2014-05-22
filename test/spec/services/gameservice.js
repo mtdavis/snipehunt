@@ -232,6 +232,7 @@ describe('Service: GameService', function()
 
         expect(GameService.resolveBeam).toHaveBeenCalledWith({
             sourceLight:{
+                isALight:true,
                 used:true,
                 hit:false,
                 reflection:false,
@@ -248,6 +249,7 @@ describe('Service: GameService', function()
 
         expect(GameService.resolveBeam).toHaveBeenCalledWith({
             sourceLight:{
+                isALight:true,
                 used:true,
                 hit:false,
                 reflection:false,
