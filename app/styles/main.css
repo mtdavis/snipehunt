@@ -10,7 +10,6 @@ body
 {
     background:#ede8d7 url("../images/paper.jpg");
     font-family:'Roboto Slab', sans-serif;
-    font-size:32px;
 }
 
 .fresh-game-true .grid-cell-member
@@ -24,7 +23,7 @@ body
     text-align:center;
 }
 
-.grid
+.grid, footer
 {
     margin-top:15px;
 }
@@ -171,14 +170,21 @@ body
     }
 }
 
+.snipes-visible-false .cage-true,
+.snipes-visible-false .cage-false,
+.snipes-visible-false .mark-true,
+.snipes-visible-false .mark-false,
+.snipes-visible-false .used-false
+{
+    cursor:pointer;
+}
+
 .cage-true
 {
     background-image:url("../images/cage.png");
     animation-duration: 1s;
     animation-name: slidedown;
     background-repeat:no-repeat;
-
-    cursor:pointer;
 }
 
 .cage-false
@@ -188,8 +194,6 @@ body
     animation-duration: 1s;
     animation-name: slideup;
     background-repeat:no-repeat;
-
-    cursor:pointer;
 }
 
 .mark-true
@@ -198,8 +202,6 @@ body
     opacity:1;
     animation-duration: 1s;
     animation-name: fadein;
-
-    cursor:pointer;
 }
 
 .mark-false
@@ -208,8 +210,6 @@ body
     opacity:0;
     animation-duration: 1s;
     animation-name: fadeout;
-
-    cursor:pointer;
 }
 
 .used-true
@@ -223,8 +223,6 @@ body
 .used-false
 {
     background-image:url("../images/huh.png");
-
-    cursor:pointer;
 }
 
 .hit-true

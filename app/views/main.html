@@ -11,7 +11,7 @@
 
     --><div class="col-sm-3">
         <button ng-click="ctrl.revealSnipes()" ng-disabled="ctrl.getSnipesVisible()" class="btn btn-lg"
-                ng-class="ctrl.getSnipesVisible() ? 'btn-default' : (ctrl.getAvailableCages() === 0 ? 'btn-warning' : 'btn-danger')">
+                ng-class="ctrl.getSnipesVisible() ? 'btn-default' : (ctrl.getAvailableCages() === 0 ? 'btn-success' : 'btn-danger')">
             Reveal Snipes
             <br/>
             (Cages remaining: {{ctrl.getAvailableCages()}})
@@ -19,41 +19,45 @@
     </div>
 </div>
 
-    <div class="grid fresh-game-{{ctrl.isFreshGame()}}">
-        <div class="row" ng-repeat="(rowNum, row) in ctrl.getGrid()">
-            <div class="col-xs-1 grid-cell" ng-repeat="(colNum, cell) in row"
-            ng-class="colNum === 0 ? 'col-xs-offset-2' : ''">
+<div class="grid fresh-game-{{ctrl.isFreshGame()}} snipes-visible-{{ctrl.getSnipesVisible()}}">
+    <div class="row" ng-repeat="(rowNum, row) in ctrl.getGrid()">
+        <div class="col-xs-1 grid-cell" ng-repeat="(colNum, cell) in row"
+        ng-class="colNum === 0 ? 'col-xs-offset-2' : ''">
 
-                <div ng-if="cell.isAField"
-                    class="grid-cell-member field">
-                </div>
+            <div ng-if="cell.isAField"
+                class="grid-cell-member field">
+            </div>
 
-                <div ng-if="cell.isAField"
-                    class="grid-cell-member snipe-{{cell.snipe}} visible-{{ctrl.getSnipesVisible()}}">
-                </div>
+            <div ng-if="cell.isAField"
+                class="grid-cell-member snipe-{{cell.snipe}} visible-{{ctrl.getSnipesVisible()}}">
+            </div>
 
-                <div ng-if="cell.isAField"
-                    class="grid-cell-member cage-{{cell.cage}}">
-                </div>
+            <div ng-if="cell.isAField"
+                class="grid-cell-member cage-{{cell.cage}}">
+            </div>
 
-                <div ng-if="cell.isAField"
-                    class="grid-cell-member mark-{{cell.mark}}"
-                    ng-click="ctrl.toggleCage(rowNum, colNum)"
-                    ng-right-click="ctrl.toggleMark(rowNum, colNum)">
-                </div>
+            <div ng-if="cell.isAField"
+                class="grid-cell-member mark-{{cell.mark}}"
+                ng-click="ctrl.toggleCage(rowNum, colNum)"
+                ng-right-click="ctrl.toggleMark(rowNum, colNum)">
+            </div>
 
-                <div ng-if="cell.isALight"
-                    class="grid-cell-member hit-{{cell.hit}} reflection-{{cell.reflection}} passed-through-{{cell.passedThrough}} link-id-{{cell.linkId}}">
-                </div>
+            <div ng-if="cell.isALight"
+                class="grid-cell-member hit-{{cell.hit}} reflection-{{cell.reflection}} passed-through-{{cell.passedThrough}} link-id-{{cell.linkId}}">
+            </div>
 
-                <div ng-if="cell.isALight"
-                    class="grid-cell-member used-{{cell.used}}"
-                    ng-click="ctrl.turnOnLight(rowNum, colNum)">
-                </div>
+            <div ng-if="cell.isALight"
+                class="grid-cell-member used-{{cell.used}}"
+                ng-click="ctrl.turnOnLight(rowNum, colNum)">
+            </div>
 
-                <div ng-if="cell.isEmpty"
-                    class="grid-cell-member">
-                </div>
+            <div ng-if="cell.isEmpty"
+                class="grid-cell-member">
             </div>
         </div>
     </div>
+</div>
+
+<footer>
+    <a href="http://github.com/mtdavis/snipehunt">View Source on GitHub</a>
+</footer>
