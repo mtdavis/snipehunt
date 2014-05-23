@@ -24,6 +24,11 @@ body
     text-align:center;
 }
 
+.grid
+{
+    margin-top:15px;
+}
+
 .grid-cell
 {
     padding-bottom: 8.3333%; /*forces it to be square.*/
