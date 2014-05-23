@@ -1,31 +1,16 @@
 @font-face
 {
-    font-family: 'Tangerine';
+    font-family: 'Roboto Slab';
     font-style: normal;
     font-weight: 400;
-    src: local('Tangerine'), url(http://themes.googleusercontent.com/static/fonts/tangerine/v4/HGfsyCL5WASpHOFnouG-RD8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+    src: local('Roboto Slab Regular'), local('RobotoSlab-Regular'), url(http://themes.googleusercontent.com/static/fonts/robotoslab/v3/y7lebkjgREBJK96VQi37ZobN6UDyHWBl620a-IRfuBk.woff) format('woff');
 }
 
 body
 {
     background:#ede8d7 url("../images/paper.jpg");
-    color:#222;
-    font-family:'Tangerine', sans-serif;
+    font-family:'Roboto Slab', sans-serif;
     font-size:32px;
-    text-align:center;
-}
-
-button
-{
-    font-family:'Tangerine', sans-serif;
-    font-size:32px;
-}
-
-*, *:before, *:after
-{
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
 }
 
 .fresh-game-true .grid-cell-member
@@ -33,30 +18,28 @@ button
     animation-duration: 0s;
 }
 
-.grid
+.container
 {
-    line-height:0;
+    margin-top:5px;
+    text-align:center;
 }
 
 .grid-cell
 {
-    display:inline-block;
-    position:relative;
-    width:100px;
-    height:100px;
-    margin:5px;
-    border-radius:5px;
+    padding-bottom: 8.3333%; /*forces it to be square.*/
 }
 
 .grid-cell-member
 {
     position:absolute;
-    width:100%;
-    height:100%;
+    height:95%;
+    width:95%;
     border-radius:5px;
+    background-size:100%;
+    margin-left:-15px;
 }
 
-.snipes-visible-true .snipe-true
+.snipe-true.visible-true
 {
     background-image:url("../images/snipe.png");
     animation-duration: 3s;
@@ -75,19 +58,19 @@ button
     animation-name: fadein;
 }
 
-.grid .grid-row .grid-cell:last-child .reflection-true
+.grid .row .grid-cell:last-child .reflection-true
 {
     /* east side. */
     transform:rotate(90deg);
 }
 
-.grid .grid-row:last-child .reflection-true
+.grid .row:last-child .reflection-true
 {
     /* south side. */
     transform:rotate(180deg);
 }
 
-.grid .grid-row .grid-cell:first-child .reflection-true
+.grid .row .grid-cell:first-child .reflection-true
 {
     /* west side. */
     transform:rotate(270deg);
@@ -240,9 +223,9 @@ button
     animation-name: fadein;
 }
 
-.message
+.message-box
 {
-    margin:0;
+    padding:10px;
 }
 
 .message.snipes-visible-true.caught-all-true
@@ -255,20 +238,4 @@ button
 {
     animation-duration: 3s;
     animation-name: fadein;
-}
-
-.fancy-box
-{
-    display: inline-block;
-    text-align:center;
-    padding:10px;
-    margin:10px;
-    width:300px;
-
-    border-style: solid;
-    border-width: 30px;
-    -moz-border-image: url("../images/frame.png") 105 105 round;
-    -webkit-border-image: url("../images/frame.png") 105 105 round;
-    -o-border-image: url("../images/frame.png") 105 105 round;
-    border-image: url("../images/frame.png") 105 105 fill round;
 }

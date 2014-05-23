@@ -5,7 +5,7 @@ angular.module('snipehuntApp')
     {
         this.startNewGame = function()
         {
-            GameService.startNewGame(7, 7, 4);
+            GameService.startNewGame(8, 8, 5);
         };
 
         this.revealSnipes = function()

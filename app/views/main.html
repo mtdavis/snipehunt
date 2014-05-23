@@ -1,25 +1,35 @@
-<div class="wrapper">
-    <button ng-click="ctrl.startNewGame()">New Game</button>
+<div class="row">
+    <div class="col-sm-3">
+        <button ng-click="ctrl.startNewGame()" class="btn btn-lg btn-danger">New Game</button>
+    </div><!--
 
-    <div class="fancy-box">
-        <p class="message snipes-visible-{{ctrl.getSnipesVisible()}} caught-all-{{ctrl.getSnipesVisible()}}">{{ctrl.getMessage()}}</p>
-        <p class="message">Cages remaining: {{ctrl.getAvailableCages()}}</p>
+    --><div class="col-sm-6 bg-info message-box">
+        <span class="message lead snipes-visible-{{ctrl.getSnipesVisible()}} caught-all-{{ctrl.getSnipesVisible()}}">
+            &#9753; {{ctrl.getMessage()}} &#10087;
+        </span>
+    </div><!--
+
+    --><div class="col-sm-3">
+        <button ng-click="ctrl.revealSnipes()" ng-disabled="ctrl.getSnipesVisible()" class="btn btn-lg"
+                ng-class="ctrl.getSnipesVisible() ? 'btn-default' : (ctrl.getAvailableCages() === 0 ? 'btn-warning' : 'btn-danger')">
+            Reveal Snipes
+            <br/>
+            (Cages remaining: {{ctrl.getAvailableCages()}})
+        </button>
     </div>
-
-    <button ng-click="ctrl.revealSnipes()" ng-disabled="ctrl.getSnipesVisible()">Reveal Snipes</button>
 </div>
 
-<div class="wrapper">
-    <div class="grid snipes-visible-{{ctrl.getSnipesVisible()}} fresh-game-{{ctrl.isFreshGame()}}">
-        <div class="grid-row" ng-repeat="(rowNum, row) in ctrl.getGrid()">
-            <div class="grid-cell" ng-repeat="(colNum, cell) in row">
+    <div class="grid fresh-game-{{ctrl.isFreshGame()}}">
+        <div class="row" ng-repeat="(rowNum, row) in ctrl.getGrid()">
+            <div class="col-xs-1 grid-cell" ng-repeat="(colNum, cell) in row"
+            ng-class="colNum === 0 ? 'col-xs-offset-2' : ''">
 
                 <div ng-if="cell.isAField"
                     class="grid-cell-member field">
                 </div>
 
                 <div ng-if="cell.isAField"
-                    class="grid-cell-member snipe-{{cell.snipe}}">
+                    class="grid-cell-member snipe-{{cell.snipe}} visible-{{ctrl.getSnipesVisible()}}">
                 </div>
 
                 <div ng-if="cell.isAField"
@@ -47,4 +57,3 @@
             </div>
         </div>
     </div>
-</div>
