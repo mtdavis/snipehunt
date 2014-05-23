@@ -67,18 +67,24 @@ body
 {
     /* east side. */
     transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    -webkit-transform:rotate(90deg);
 }
 
 .grid .row:last-child .reflection-true
 {
     /* south side. */
     transform:rotate(180deg);
+    -ms-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
 }
 
 .grid .row .grid-cell:first-child .reflection-true
 {
     /* west side. */
     transform:rotate(270deg);
+    -ms-transform:rotate(270deg);
+    -webkit-transform:rotate(270deg);
 }
 
 .link-id-1  { background-image:url("../images/dogs/afghan-hound.png"); }
