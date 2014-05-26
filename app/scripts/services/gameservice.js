@@ -75,7 +75,7 @@ angular.module('snipehuntApp')
 
             //generate the shuffled link IDs.
             this.availableLinkIds = [];
-            for(var i = 1; i <= 25; i++)
+            for(var i = 1; i <= 26; i++)
             {
                 this.availableLinkIds.push(i);
             }
