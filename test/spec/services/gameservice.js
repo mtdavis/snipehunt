@@ -489,4 +489,77 @@ describe('Service: GameService', function()
         GameService.revealSnipes();
         expect(GameService.caughtAll).toBe(true);
     });
+
+    it("should generate tutorial information - snipe hits", function()
+    {
+        //assign a snipe manually.
+        var width = 5;
+        var height = 5;
+        GameService.startNewGame(height, width, 0);
+        GameService.grid[3][3].snipe = true;
+
+        expect(GameService.grid[3][3].snipeCausedHit).toBe(false);
+
+        GameService.turnOnLight(0, 3);
+
+        expect(GameService.grid[1][3].beams).toEqual({"south":true});
+        expect(GameService.grid[2][3].beams).toEqual({"south":true});
+        expect(GameService.grid[3][3].snipeCausedHit).toBe(true);
+
+        GameService.turnOnLight(3, 0);
+
+        expect(GameService.grid[1][3].beams).toEqual({});
+        expect(GameService.grid[2][3].beams).toEqual({});
+        expect(GameService.grid[3][1].beams).toEqual({"east":true});
+        expect(GameService.grid[3][2].beams).toEqual({"east":true});
+        expect(GameService.grid[3][3].snipeCausedHit).toBe(true);
+    });
+
+    it("should generate tutorial information - redirection", function()
+    {
+        //assign a snipe manually.
+        var width = 5;
+        var height = 5;
+        GameService.startNewGame(height, width, 0);
+        GameService.grid[3][3].snipe = true;
+
+        expect(GameService.grid[3][3].snipeCausedRedirection).toBe(false);
+
+        GameService.turnOnLight(2, 0);
+
+        expect(GameService.grid[2][1].beams).toEqual({"east":true});
+        expect(GameService.grid[2][2].beams).toEqual({"eastToNorth":true});
+        expect(GameService.grid[1][2].beams).toEqual({"north":true});
+        expect(GameService.grid[3][3].snipeCausedRedirection).toBe(true);
+    });
+
+    it("should generate tutorial information - reflection", function()
+    {
+        //assign snipes manually.
+        var width = 5;
+        var height = 5;
+        GameService.startNewGame(height, width, 0);
+        GameService.grid[1][3].snipe = true;
+        GameService.grid[3][3].snipe = true;
+
+        expect(GameService.grid[1][3].snipeCausedReflection).toBe(false);
+        expect(GameService.grid[1][3].snipeCausedReflection).toBe(false);
+
+        GameService.turnOnLight(2, 0);
+
+        expect(GameService.grid[2][1].beams).toEqual({"east":true});
+        expect(GameService.grid[2][2].beams).toEqual({"reflectionToEast":true});
+        expect(GameService.grid[1][3].snipeCausedReflection).toBe(true);
+        expect(GameService.grid[3][3].snipeCausedReflection).toBe(true);
+
+        GameService.turnOnLight(0, 2);
+        expect(GameService.grid[2][1].beams).toEqual({});
+        expect(GameService.grid[2][2].beams).toEqual({});
+        expect(GameService.grid[1][3].snipeCausedReflection).toBe(true);
+        expect(GameService.grid[3][2].snipeCausedReflection).toBe(false);
+
+        GameService.turnOnLight(2, 4);
+        expect(GameService.grid[1][3].snipeCausedReflection).toBe(true);
+        expect(GameService.grid[3][3].snipeCausedReflection).toBe(true);
+    });
 });

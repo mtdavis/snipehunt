@@ -48,7 +48,11 @@ angular.module('snipehuntApp')
                         isAField:true,
                         snipe:false,
                         cage:false,
-                        mark:false
+                        mark:false,
+                        beams:{},
+                        snipeCausedHit:false,
+                        snipeCausedRedirection:false,
+                        snipeCausedReflection:false
                     };
                 }
             }
@@ -158,6 +162,8 @@ angular.module('snipehuntApp')
                     beam.verticalDirection = 0;
                 }
 
+                this.clearTutorialInfo();
+
                 this.resolveBeam(beam);
 
                 if(light.hit)
@@ -175,23 +181,47 @@ angular.module('snipehuntApp')
             }
         };
 
+        this.clearTutorialInfo = function()
+        {
+            for(var row = 1; row < this.gridHeight - 1; row++)
+            {
+                for(var col = 1; col < this.gridWidth - 1; col++)
+                {
+                    var cell = this.grid[row][col];
+                    cell.beams = {};
+                    cell.snipeCausedHit = false;
+                    cell.snipeCausedReflection = false;
+                    cell.snipeCausedRedirection = false;
+                }
+            }
+        };
+
         this.resolveBeam = function(beam)
         {
             var resolved = false;
 
             while(!resolved)
             {
+                var currentCell = this.grid[beam.rowNum][beam.colNum];
                 var nextCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum + beam.horizontalDirection];
 
                 if(nextCell.snipe)
                 {
                     beam.sourceLight.hit = true;
+                    nextCell.snipeCausedHit = true;
                     resolved = true;
-                }
-                else if(nextCell.isALight)
-                {
-                    this.registerPassthrough(beam.sourceLight, nextCell);
-                    resolved = true;
+
+                    if(currentCell.isAField)
+                    {
+                        if(beam.horizontalDirection !== 0)
+                        {
+                            currentCell.beams[beam.horizontalDirection === 1 ? "east" : "west"] = true;
+                        }
+                        else if(beam.verticalDirection !== 0)
+                        {
+                            currentCell.beams[beam.verticalDirection === 1 ? "south" : "north"] = true;
+                        }
+                    }
                 }
                 else if(beam.horizontalDirection !== 0)
                 {
@@ -201,12 +231,24 @@ angular.module('snipehuntApp')
                 {
                     resolved = this.iterateBeamMovingVertically(beam);
                 }
+
+                if(!resolved)
+                {
+                    var currentCell = this.grid[beam.rowNum][beam.colNum];
+
+                    if(currentCell.isALight)
+                    {
+                        this.registerPassthrough(beam.sourceLight, currentCell);
+                        resolved = true;
+                    }
+                }
             }
         };
 
         this.iterateBeamMovingHorizontally = function(beam)
         {
             var resolved = false;
+            var currentCell = this.grid[beam.rowNum][beam.colNum];
             var nextTopCell = this.grid[beam.rowNum - 1][beam.colNum + beam.horizontalDirection];
             var nextCell = this.grid[beam.rowNum][beam.colNum + beam.horizontalDirection];
             var nextBottomCell = this.grid[beam.rowNum + 1][beam.colNum + beam.horizontalDirection];
@@ -218,27 +260,52 @@ angular.module('snipehuntApp')
                 //with a snipe immediately above/below the next cell.
                 beam.sourceLight.reflection = true;
                 resolved = true;
+
+                if(nextTopCell.snipe)
+                {
+                    nextTopCell.snipeCausedReflection = true;
+                }
+                
+                if(nextBottomCell.snipe)
+                {
+                    nextBottomCell.snipeCausedReflection = true;
+                }
             }
             else if(nextTopCell.snipe && nextBottomCell.snipe)
             {
+                currentCell.beams["reflectionTo" + (beam.horizontalDirection === 1 ? "East" : "West")] = true;
+                nextTopCell.snipeCausedReflection = true;
+                nextBottomCell.snipeCausedReflection = true;
                 beam.sourceLight.reflection = true;
                 resolved = true;
             }
             else if(nextTopCell.snipe)
             {
+                nextTopCell.snipeCausedRedirection = true;
+                currentCell.beams[(beam.horizontalDirection === 1 ? "east" : "west") + "ToSouth"] = true;
+
                 //turn south.
                 beam.horizontalDirection = 0;
                 beam.verticalDirection = 1;
+                beam.rowNum += beam.verticalDirection;
             }
             else if(nextBottomCell.snipe)
             {
+                nextBottomCell.snipeCausedRedirection = true;
+                currentCell.beams[(beam.horizontalDirection === 1 ? "east" : "west") + "ToNorth"] = true;
+
                 //turn north.
                 beam.horizontalDirection = 0;
                 beam.verticalDirection = -1;
+                beam.rowNum += beam.verticalDirection;
             }
             else
             {
-                beam.rowNum += beam.verticalDirection;
+                if(currentCell.isAField)
+                {
+                    currentCell.beams[beam.horizontalDirection === 1 ? "east" : "west"] = true;
+                }
+
                 beam.colNum += beam.horizontalDirection;
             }
 
@@ -248,6 +315,7 @@ angular.module('snipehuntApp')
         this.iterateBeamMovingVertically = function(beam)
         {
             var resolved = false;
+            var currentCell = this.grid[beam.rowNum][beam.colNum];
             var nextLeftCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum - 1];
             var nextCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum];
             var nextRightCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum + 1];
@@ -259,28 +327,53 @@ angular.module('snipehuntApp')
                 //with a snipe immediately left/right to the next cell.
                 beam.sourceLight.reflection = true;
                 resolved = true;
+
+                if(nextLeftCell.snipe)
+                {
+                    nextLeftCell.snipeCausedReflection = true;
+                }
+
+                if(nextRightCell.snipe)
+                {
+                    nextRightCell.snipeCausedReflection = true;
+                }
             }
             else if(nextLeftCell.snipe && nextRightCell.snipe)
             {
+                currentCell.beams["reflectionTo" + (beam.verticalDirection === 1 ? "South" : "North")] = true;
+                nextLeftCell.snipeCausedReflection = true;
+                nextRightCell.snipeCausedReflection = true;
                 beam.sourceLight.reflection = true;
                 resolved = true;
             }
             else if(nextLeftCell.snipe)
             {
+                nextLeftCell.snipeCausedRedirection = true;
+                currentCell.beams[(beam.verticalDirection === 1 ? "south" : "north") + "ToEast"] = true;
+
                 //turn east.
                 beam.horizontalDirection = 1;
                 beam.verticalDirection = 0;
+                beam.colNum += beam.horizontalDirection;
             }
             else if(nextRightCell.snipe)
             {
+                nextRightCell.snipeCausedRedirection = true;
+                currentCell.beams[(beam.verticalDirection === 1 ? "south" : "north") + "ToWest"] = true;
+
                 //turn west.
                 beam.horizontalDirection = -1;
                 beam.verticalDirection = 0;
+                beam.colNum += beam.horizontalDirection;
             }
             else
             {
+                if(currentCell.isAField)
+                {
+                    currentCell.beams[beam.verticalDirection === 1 ? "south" : "north"] = true;
+                }
+
                 beam.rowNum += beam.verticalDirection;
-                beam.colNum += beam.horizontalDirection;
             }
 
             return resolved;

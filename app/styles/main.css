@@ -50,6 +50,19 @@ body
     animation-name: fadein;
 }
 
+.snipe-true.snipe-caused-reflection-true,
+.snipe-true.snipe-caused-redirection-true
+{
+    border:1px solid orange;
+    box-shadow: 0 0 3px orange;
+}
+
+.snipe-true.snipe-caused-hit-true
+{
+    border:1px solid blue;
+    box-shadow: 0 0 3px blue;
+}
+
 .field
 {
     background-image:url("../images/field.png");
@@ -248,4 +261,120 @@ body
 {
     animation-duration: 3s;
     animation-name: fadein;
+}
+
+.beam-south
+{
+    background-image:url("../images/beam.png");
+}
+
+.beam-west
+{
+    background-image:url("../images/beam.png");
+    transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    -webkit-transform:rotate(90deg);
+}
+
+.beam-north
+{
+    background-image:url("../images/beam.png");
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+}
+
+.beam-east
+{
+    background-image:url("../images/beam.png");
+    transform:rotate(270deg);
+    -ms-transform:rotate(270deg);
+    -webkit-transform:rotate(270deg);
+}
+
+.beam-southToEast
+{
+    background-image:url("../images/beam-left-turn.png");
+}
+
+.beam-westToSouth
+{
+    background-image:url("../images/beam-left-turn.png");
+    transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    -webkit-transform:rotate(90deg);
+}
+
+.beam-northToWest
+{
+    background-image:url("../images/beam-left-turn.png");
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+}
+
+.beam-eastToNorth
+{
+    background-image:url("../images/beam-left-turn.png");
+    transform:rotate(270deg);
+    -ms-transform:rotate(270deg);
+    -webkit-transform:rotate(270deg);
+}
+
+.beam-southToWest
+{
+    background-image:url("../images/beam-right-turn.png");
+}
+
+.beam-westToNorth
+{
+    background-image:url("../images/beam-right-turn.png");
+    transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    -webkit-transform:rotate(90deg);
+}
+
+.beam-northToEast
+{
+    background-image:url("../images/beam-right-turn.png");
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+}
+
+.beam-eastToSouth
+{
+    background-image:url("../images/beam-right-turn.png");
+    transform:rotate(270deg);
+    -ms-transform:rotate(270deg);
+    -webkit-transform:rotate(270deg);
+}
+
+.beam-reflectionToSouth
+{
+    background-image:url("../images/beam-reflection.png");
+}
+
+.beam-reflectionToWest
+{
+    background-image:url("../images/beam-reflection.png");
+    transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    -webkit-transform:rotate(90deg);
+}
+
+.beam-reflectionToNorth
+{
+    background-image:url("../images/beam-reflection.png");
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+}
+
+.beam-reflectionToEast
+{
+    background-image:url("../images/beam-reflection.png");
+    transform:rotate(270deg);
+    -ms-transform:rotate(270deg);
+    -webkit-transform:rotate(270deg);
 }

@@ -28,8 +28,12 @@
                 class="grid-cell-member field">
             </div>
 
+            <div ng-repeat="(beamDirection, _) in cell.beams"
+                class="grid-cell-member beam-{{beamDirection}}">
+            </div>
+
             <div ng-if="cell.isAField"
-                class="grid-cell-member snipe-{{cell.snipe}} visible-{{ctrl.getSnipesVisible()}}">
+                class="grid-cell-member snipe-{{cell.snipe}} visible-{{ctrl.getSnipesVisible()}} snipe-caused-hit-{{cell.snipeCausedHit}} snipe-caused-reflection-{{cell.snipeCausedReflection}} snipe-caused-redirection-{{cell.snipeCausedRedirection}}">
             </div>
 
             <div ng-if="cell.isAField"
