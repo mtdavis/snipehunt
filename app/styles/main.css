@@ -50,8 +50,8 @@ body
     animation-name: fadein;
 }
 
-.snipe-true.visible-false.snipe-caused-reflection-true,
-.snipe-true.visible-false.snipe-caused-redirection-true
+.snipe-caused-reflection-true.tutorial-mode-true,
+.snipe-caused-redirection-true.tutorial-mode-true
 {
     border:1px solid orange;
     box-shadow: 0 0 3px orange;
@@ -59,7 +59,7 @@ body
     opacity:.5;
 }
 
-.snipe-true.visible-false.snipe-caused-hit-true
+.snipe-caused-hit-true.tutorial-mode-true
 {
     border:1px solid blue;
     box-shadow: 0 0 3px blue;

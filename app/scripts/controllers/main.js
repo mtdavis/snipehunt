@@ -28,6 +28,16 @@ angular.module('snipehuntApp')
             return GameService.freshGame;
         };
 
+        this.isTutorialMode = function()
+        {
+            return GameService.tutorialMode;
+        };
+
+        this.toggleTutorialMode = function()
+        {
+            GameService.toggleTutorialMode();
+        };
+
         this.getMessage = function()
         {
             return GameService.message;

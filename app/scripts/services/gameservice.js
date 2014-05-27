@@ -3,6 +3,17 @@
 angular.module('snipehuntApp')
     .service('GameService', function GameService()
     {
+        this.gridHeight = 0;
+        this.gridWidth = 0;
+        this.snipesVisible = false;
+        this.tutorialMode = false;
+        this.freshGame = false;
+        this.message = "";
+        this.caughtAll = false;
+        this.grid = [];
+        this.availableLinkIds = [];
+        this.availableCages = 0;
+
         this.startNewGame = function(height, width, snipes)
         {
             this.gridHeight = height;
@@ -465,5 +476,10 @@ angular.module('snipehuntApp')
             {
                 this.message = "Better luck next time!";
             }
+        };
+
+        this.toggleTutorialMode = function()
+        {
+            this.tutorialMode = !this.tutorialMode;
         };
     });
