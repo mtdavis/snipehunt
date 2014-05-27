@@ -50,17 +50,21 @@ body
     animation-name: fadein;
 }
 
-.snipe-true.snipe-caused-reflection-true,
-.snipe-true.snipe-caused-redirection-true
+.snipe-true.visible-false.snipe-caused-reflection-true,
+.snipe-true.visible-false.snipe-caused-redirection-true
 {
     border:1px solid orange;
     box-shadow: 0 0 3px orange;
+    background-image:url("../images/snipe.png");
+    opacity:.5;
 }
 
-.snipe-true.snipe-caused-hit-true
+.snipe-true.visible-false.snipe-caused-hit-true
 {
     border:1px solid blue;
     box-shadow: 0 0 3px blue;
+    background-image:url("../images/snipe.png");
+    opacity:.5;
 }
 
 .field
@@ -265,12 +269,12 @@ body
 
 .beam-south
 {
-    background-image:url("../images/beam.png");
+    background-image:url("../images/beam.gif");
 }
 
 .beam-west
 {
-    background-image:url("../images/beam.png");
+    background-image:url("../images/beam.gif");
     transform:rotate(90deg);
     -ms-transform:rotate(90deg);
     -webkit-transform:rotate(90deg);
@@ -278,7 +282,7 @@ body
 
 .beam-north
 {
-    background-image:url("../images/beam.png");
+    background-image:url("../images/beam.gif");
     transform:rotate(180deg);
     -ms-transform:rotate(180deg);
     -webkit-transform:rotate(180deg);
@@ -286,7 +290,7 @@ body
 
 .beam-east
 {
-    background-image:url("../images/beam.png");
+    background-image:url("../images/beam.gif");
     transform:rotate(270deg);
     -ms-transform:rotate(270deg);
     -webkit-transform:rotate(270deg);
@@ -294,12 +298,12 @@ body
 
 .beam-southToEast
 {
-    background-image:url("../images/beam-left-turn.png");
+    background-image:url("../images/beam-left-turn.gif");
 }
 
 .beam-westToSouth
 {
-    background-image:url("../images/beam-left-turn.png");
+    background-image:url("../images/beam-left-turn.gif");
     transform:rotate(90deg);
     -ms-transform:rotate(90deg);
     -webkit-transform:rotate(90deg);
@@ -307,7 +311,7 @@ body
 
 .beam-northToWest
 {
-    background-image:url("../images/beam-left-turn.png");
+    background-image:url("../images/beam-left-turn.gif");
     transform:rotate(180deg);
     -ms-transform:rotate(180deg);
     -webkit-transform:rotate(180deg);
@@ -315,7 +319,7 @@ body
 
 .beam-eastToNorth
 {
-    background-image:url("../images/beam-left-turn.png");
+    background-image:url("../images/beam-left-turn.gif");
     transform:rotate(270deg);
     -ms-transform:rotate(270deg);
     -webkit-transform:rotate(270deg);
@@ -323,12 +327,12 @@ body
 
 .beam-southToWest
 {
-    background-image:url("../images/beam-right-turn.png");
+    background-image:url("../images/beam-right-turn.gif");
 }
 
 .beam-westToNorth
 {
-    background-image:url("../images/beam-right-turn.png");
+    background-image:url("../images/beam-right-turn.gif");
     transform:rotate(90deg);
     -ms-transform:rotate(90deg);
     -webkit-transform:rotate(90deg);
@@ -336,7 +340,7 @@ body
 
 .beam-northToEast
 {
-    background-image:url("../images/beam-right-turn.png");
+    background-image:url("../images/beam-right-turn.gif");
     transform:rotate(180deg);
     -ms-transform:rotate(180deg);
     -webkit-transform:rotate(180deg);
@@ -344,36 +348,36 @@ body
 
 .beam-eastToSouth
 {
-    background-image:url("../images/beam-right-turn.png");
+    background-image:url("../images/beam-right-turn.gif");
     transform:rotate(270deg);
     -ms-transform:rotate(270deg);
     -webkit-transform:rotate(270deg);
 }
 
-.beam-reflectionToSouth
+.beam-reflectionSouthToNorth
 {
-    background-image:url("../images/beam-reflection.png");
+    background-image:url("../images/beam-reflection.gif");
 }
 
-.beam-reflectionToWest
+.beam-reflectionWestToEast
 {
-    background-image:url("../images/beam-reflection.png");
+    background-image:url("../images/beam-reflection.gif");
     transform:rotate(90deg);
     -ms-transform:rotate(90deg);
     -webkit-transform:rotate(90deg);
 }
 
-.beam-reflectionToNorth
+.beam-reflectionNorthToSouth
 {
-    background-image:url("../images/beam-reflection.png");
+    background-image:url("../images/beam-reflection.gif");
     transform:rotate(180deg);
     -ms-transform:rotate(180deg);
     -webkit-transform:rotate(180deg);
 }
 
-.beam-reflectionToEast
+.beam-reflectionEastToWest
 {
-    background-image:url("../images/beam-reflection.png");
+    background-image:url("../images/beam-reflection.gif");
     transform:rotate(270deg);
     -ms-transform:rotate(270deg);
     -webkit-transform:rotate(270deg);

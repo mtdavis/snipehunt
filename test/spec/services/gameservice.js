@@ -547,8 +547,8 @@ describe('Service: GameService', function()
 
         GameService.turnOnLight(2, 0);
 
-        expect(GameService.grid[2][1].beams).toEqual({"east":true});
-        expect(GameService.grid[2][2].beams).toEqual({"reflectionToEast":true});
+        expect(GameService.grid[2][1].beams).toEqual({"east":true, "west":true});
+        expect(GameService.grid[2][2].beams).toEqual({"reflectionEastToWest":true});
         expect(GameService.grid[1][3].snipeCausedReflection).toBe(true);
         expect(GameService.grid[3][3].snipeCausedReflection).toBe(true);
 

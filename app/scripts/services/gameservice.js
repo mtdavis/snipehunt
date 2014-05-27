@@ -238,7 +238,15 @@ angular.module('snipehuntApp')
 
                     if(currentCell.isALight)
                     {
-                        this.registerPassthrough(beam.sourceLight, currentCell);
+                        if(currentCell === beam.sourceLight)
+                        {
+                            beam.sourceLight.reflection = true;
+                        }
+                        else
+                        {
+                            this.registerPassthrough(beam.sourceLight, currentCell);
+                        }
+
                         resolved = true;
                     }
                 }
@@ -273,11 +281,11 @@ angular.module('snipehuntApp')
             }
             else if(nextTopCell.snipe && nextBottomCell.snipe)
             {
-                currentCell.beams["reflectionTo" + (beam.horizontalDirection === 1 ? "East" : "West")] = true;
+                currentCell.beams["reflection" + (beam.horizontalDirection === 1 ? "EastToWest" : "WestToEast")] = true;
                 nextTopCell.snipeCausedReflection = true;
                 nextBottomCell.snipeCausedReflection = true;
-                beam.sourceLight.reflection = true;
-                resolved = true;
+                beam.horizontalDirection = -beam.horizontalDirection;
+                beam.colNum += beam.horizontalDirection;
             }
             else if(nextTopCell.snipe)
             {
@@ -340,11 +348,12 @@ angular.module('snipehuntApp')
             }
             else if(nextLeftCell.snipe && nextRightCell.snipe)
             {
-                currentCell.beams["reflectionTo" + (beam.verticalDirection === 1 ? "South" : "North")] = true;
+                currentCell.beams["reflection" + (beam.verticalDirection === 1 ? "SouthToNorth" : "NorthToSouth")] = true;
                 nextLeftCell.snipeCausedReflection = true;
                 nextRightCell.snipeCausedReflection = true;
-                beam.sourceLight.reflection = true;
-                resolved = true;
+
+                beam.verticalDirection = -beam.verticalDirection;
+                beam.rowNum += beam.verticalDirection;
             }
             else if(nextLeftCell.snipe)
             {
