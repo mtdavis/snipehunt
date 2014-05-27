@@ -1,3 +1,6 @@
 "use strict";
 
-angular.module("snipehuntApp", []);
+angular.module("snipehuntApp", []).run(function()
+{
+    FastClick.attach(document.body);
+});
