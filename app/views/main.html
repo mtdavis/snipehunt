@@ -1,15 +1,6 @@
 <div class="row">
     <div class="col-sm-3">
-        <div class="row">
-            <button ng-click="ctrl.startNewGame()" class="btn btn-info">New Game</button>
-        </div>
-
-        <div class="row">
-            <button ng-click="ctrl.toggleTutorialMode()" class="btn btn-info">
-                <span ng-if="ctrl.isTutorialMode()">Tutorial mode is on.</span>
-                <span ng-if="!ctrl.isTutorialMode()">Tutorial mode is off.</span>
-            </button>
-        </div>
+        <button ng-click="ctrl.startNewGame()" class="btn btn-lg btn-info">New Game</button>
     </div><!--
 
     --><div class="col-sm-6 bg-info message-box">
@@ -19,7 +10,7 @@
     </div><!--
 
     --><div class="col-sm-3">
-        <button ng-click="ctrl.revealSnipes()" ng-disabled="ctrl.getSnipesVisible()" class="btn btn-lg"
+        <button ng-click="ctrl.revealSnipes()" ng-disabled="ctrl.getSnipesVisible()" class="btn"
                 ng-class="ctrl.getSnipesVisible() ? 'btn-info' : (ctrl.getAvailableCages() === 0 ? 'btn-success' : 'btn-danger')">
             Reveal Snipes
             <br/>
@@ -76,9 +67,27 @@
     </div>
 </div>
 
+<ul class="list-unstyled how-to-play">
+    <li>There are five snipes hiding in the field above, and your mission is to catch all of them.</li>
+    <li>Click on a question mark to explore the field.</li>
+    <li>When you think you have found a snipe's hiding place, click on that square to place a cage.</li>
+    <li>Or optionally right-click to add an X to squares you think are empty.</li>
+    <li>Once you have placed all your cages, <a href="#" ng-click="ctrl.revealSnipes()">reveal the snipes</a> to find out how you fared!</li>
+</ul>
+
+<ul class="list-unstyled how-to-play">
+    <li>
+        <a href="#" ng-click="ctrl.toggleTutorialMode()">Use tutorial mode</a>
+        to learn how the question marks reveal hints about the snipes' locations.
+    </li>
+    <li ng-if="ctrl.isTutorialMode()">(Tutorial mode is currently on.)</li>
+    <li ng-if="!ctrl.isTutorialMode()">(Tutorial mode is currently off.)</li>
+</ul>
+
 <footer>
     <ul class="list-unstyled">
-        <li><a href="http://github.com/mtdavis/snipehunt">View Source on GitHub</a></li>
-        <li><a href="http://shelzie.deviantart.com/gallery/824381">Dog Icons by shelzie</a></li>
+        <li><a href="http://github.com/mtdavis/snipehunt">View Source on GitHub.</a></li>
+        <li>Based on Snark Hunt, a game by Jeff Johannigman.</a>
+        <li><a href="http://shelzie.deviantart.com/gallery/824381">Dog Icons by shelzie.</a></li>
     </ul>
 </footer>
