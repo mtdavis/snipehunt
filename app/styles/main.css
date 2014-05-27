@@ -54,17 +54,23 @@ body
 .snipe-caused-redirection-true.tutorial-mode-true
 {
     border:1px solid orange;
-    box-shadow: 0 0 3px orange;
+    box-shadow: 0 0 2px 3px orange;
     background-image:url("../images/snipe.png");
     opacity:.5;
+
+    animation-duration: 1s;
+    animation-name: fadein-halfway;
 }
 
 .snipe-caused-hit-true.tutorial-mode-true
 {
-    border:1px solid blue;
-    box-shadow: 0 0 3px blue;
+    border:1px solid #005AFF;
+    box-shadow: 0 0 2px 3px #005AFF;
     background-image:url("../images/snipe.png");
     opacity:.5;
+
+    animation-duration: 1s;
+    animation-name: fadein-halfway;
 }
 
 .field
@@ -146,6 +152,19 @@ body
     to
     {
         opacity:1;
+    }
+}
+
+@keyframes fadein-halfway
+{
+    from
+    {
+        opacity:0;
+    }
+
+    to
+    {
+        opacity:.5;
     }
 }
 
@@ -264,6 +283,12 @@ body
 .message.snipes-visible-true.caught-all-false
 {
     animation-duration: 3s;
+    animation-name: fadein;
+}
+
+.beam
+{
+    animation-duration: 1s;
     animation-name: fadein;
 }
 
