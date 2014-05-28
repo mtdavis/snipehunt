@@ -1,13 +1,12 @@
-'use strict';
+"use strict";
 
-angular.module('snipehuntApp')
-    .service('GameService', function GameService()
+angular.module("snipehuntApp")
+    .service("GameService", function GameService()
     {
         this.gridHeight = 0;
         this.gridWidth = 0;
-        this.snipesVisible = false;
+        this.snipesRevealed = false;
         this.tutorialMode = false;
-        this.freshGame = false;
         this.message = "";
         this.caughtAll = false;
         this.grid = [];
@@ -18,8 +17,7 @@ angular.module('snipehuntApp')
         {
             this.gridHeight = height;
             this.gridWidth = width;
-            this.snipesVisible = false;
-            this.freshGame = true;
+            this.snipesRevealed = false;
             this.message = "Started new game.";
             this.caughtAll = false;
 
@@ -135,10 +133,8 @@ angular.module('snipehuntApp')
 
         this.turnOnLight = function(rowNum, colNum)
         {
-            this.freshGame = false;
-
             var light = this.grid[rowNum][colNum];
-            if(!light.used && !this.snipesVisible)
+            if(!light.used && !this.snipesRevealed)
             {
                 light.used = true;
 
@@ -183,11 +179,11 @@ angular.module('snipehuntApp')
                 }
                 else if(light.passedThrough)
                 {
-                    this.message = "Passed through."
+                    this.message = "Passed through.";
                 }
                 else if(light.reflection)
                 {
-                    this.message = "Reflected!"
+                    this.message = "Reflected!";
                 }
             }
         };
@@ -269,7 +265,6 @@ angular.module('snipehuntApp')
             var resolved = false;
             var currentCell = this.grid[beam.rowNum][beam.colNum];
             var nextTopCell = this.grid[beam.rowNum - 1][beam.colNum + beam.horizontalDirection];
-            var nextCell = this.grid[beam.rowNum][beam.colNum + beam.horizontalDirection];
             var nextBottomCell = this.grid[beam.rowNum + 1][beam.colNum + beam.horizontalDirection];
 
             if((beam.colNum === 0 || beam.colNum === this.gridWidth - 1) &&
@@ -336,7 +331,6 @@ angular.module('snipehuntApp')
             var resolved = false;
             var currentCell = this.grid[beam.rowNum][beam.colNum];
             var nextLeftCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum - 1];
-            var nextCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum];
             var nextRightCell = this.grid[beam.rowNum + beam.verticalDirection][beam.colNum + 1];
 
             if((beam.rowNum === 0 || beam.rowNum === this.gridHeight - 1) &&
@@ -359,7 +353,8 @@ angular.module('snipehuntApp')
             }
             else if(nextLeftCell.snipe && nextRightCell.snipe)
             {
-                currentCell.beams["reflection" + (beam.verticalDirection === 1 ? "SouthToNorth" : "NorthToSouth")] = true;
+                currentCell.beams["reflection" +
+                    (beam.verticalDirection === 1 ? "SouthToNorth" : "NorthToSouth")] = true;
                 nextLeftCell.snipeCausedReflection = true;
                 nextRightCell.snipeCausedReflection = true;
 
@@ -414,9 +409,7 @@ angular.module('snipehuntApp')
 
         this.toggleCage = function(rowNum, colNum)
         {
-            this.freshGame = false;
-
-            if(!this.snipesVisible)
+            if(!this.snipesRevealed)
             {
                 var cell = this.grid[rowNum][colNum];
                 if(cell.cage)
@@ -435,9 +428,7 @@ angular.module('snipehuntApp')
 
         this.toggleMark = function(rowNum, colNum)
         {
-            this.freshGame = false;
-
-            if(!this.snipesVisible)
+            if(!this.snipesRevealed)
             {
                 var cell = this.grid[rowNum][colNum];
                 cell.mark = !cell.mark;
@@ -452,8 +443,7 @@ angular.module('snipehuntApp')
 
         this.revealSnipes = function()
         {
-            this.freshGame = false;
-            this.snipesVisible = true;
+            this.snipesRevealed = true;
 
             this.caughtAll = true;
             for(var row = 1; row < this.gridHeight - 1; row++)

@@ -1,4 +1,3 @@
-'use strict';
+"use strict";
 
-angular
-  .module('snipehuntApp', []);
+angular.module("snipehuntApp", []);

@@ -1,67 +1,61 @@
-'use strict';
+"use strict";
 
-angular.module('snipehuntApp')
-    .controller('MainCtrl', function(GameService)
+angular.module("snipehuntApp").controller("MainCtrl", function(GameService)
+{
+    this.startNewGame = function()
     {
-        this.startNewGame = function()
-        {
-            GameService.startNewGame(8, 8, 5);
-        };
+        GameService.startNewGame(8, 8, 5);
+    };
 
-        this.revealSnipes = function()
-        {
-            GameService.revealSnipes();
-        };
+    this.revealSnipes = function()
+    {
+        GameService.revealSnipes();
+    };
 
-        this.getGrid = function()
-        {
-            return GameService.grid;
-        };
+    this.getGrid = function()
+    {
+        return GameService.grid;
+    };
 
-        this.getSnipesVisible = function()
-        {
-            return GameService.snipesVisible;
-        };
+    this.areSnipesRevealed = function()
+    {
+        return GameService.snipesRevealed;
+    };
 
-        this.isFreshGame = function()
-        {
-            return GameService.freshGame;
-        };
+    this.isTutorialMode = function()
+    {
+        return GameService.tutorialMode;
+    };
 
-        this.isTutorialMode = function()
-        {
-            return GameService.tutorialMode;
-        };
+    this.toggleTutorialMode = function()
+    {
+        GameService.toggleTutorialMode();
+    };
 
-        this.toggleTutorialMode = function()
-        {
-            GameService.toggleTutorialMode();
-        };
+    this.getMessage = function()
+    {
+        return GameService.message;
+    };
 
-        this.getMessage = function()
-        {
-            return GameService.message;
-        };
+    this.getAvailableCages = function()
+    {
+        return GameService.availableCages;
+    };
 
-        this.getAvailableCages = function()
-        {
-            return GameService.availableCages;
-        };
+    this.toggleCage = function(rowNum, colNum)
+    {
+        GameService.toggleCage(rowNum, colNum);
+    };
 
-        this.toggleCage = function(rowNum, colNum)
-        {
-            GameService.toggleCage(rowNum, colNum);
-        };
+    this.toggleMark = function(rowNum, colNum)
+    {
+        GameService.toggleMark(rowNum, colNum);
+    };
 
-        this.toggleMark = function(rowNum, colNum)
-        {
-            GameService.toggleMark(rowNum, colNum);
-        };
+    this.turnOnLight = function(rowNum, colNum)
+    {
+        GameService.turnOnLight(rowNum, colNum);
+    };
 
-        this.turnOnLight = function(rowNum, colNum)
-        {
-            GameService.turnOnLight(rowNum, colNum);
-        };
-
-        this.startNewGame();
-    });
+    this.startNewGame();
+});

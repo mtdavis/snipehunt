@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-describe('Directive: ngRightClick', function () {
+describe("Directive: ngRightClick", function () {
 
     // load the directive's module
-    beforeEach(module('snipehuntApp'));
+    beforeEach(module("snipehuntApp"));
 
     var scope;
 

@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-describe('Service: GameService', function()
+describe("Service: GameService", function()
 {
     // load the service's module
-    beforeEach(module('snipehuntApp'));
+    beforeEach(module("snipehuntApp"));
 
     // instantiate service
     var GameService;
@@ -12,7 +12,7 @@ describe('Service: GameService', function()
         GameService = _GameService_;
     }));
 
-    it('should do something', function()
+    it("should do something", function()
     {
         expect(!!GameService).toBe(true);
     });
@@ -187,11 +187,11 @@ describe('Service: GameService', function()
     {
         GameService.startNewGame(5, 5, 4);
 
-        expect(GameService.snipesVisible).toBe(false);
+        expect(GameService.snipesRevealed).toBe(false);
 
         GameService.revealSnipes();
 
-        expect(GameService.snipesVisible).toBe(true);
+        expect(GameService.snipesRevealed).toBe(true);
     });
 
     it("shouldn't toggle cages/marks/lights after the game is over", function()
@@ -209,7 +209,7 @@ describe('Service: GameService', function()
         GameService.turnOnLight(0, 1);
         expect(GameService.grid[0][1].used).toBe(false);
 
-    })
+    });
 
     it("should turn on a light when told to", function()
     {
@@ -217,7 +217,7 @@ describe('Service: GameService', function()
 
         expect(GameService.grid[0][2].used).toBe(false);
 
-        GameService.turnOnLight(0, 2)
+        GameService.turnOnLight(0, 2);
 
         expect(GameService.grid[0][2].used).toBe(true);
     });

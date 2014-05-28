@@ -4,14 +4,15 @@
     </div><!--
 
     --><div class="col-sm-6 bg-info message-box">
-        <span class="message lead snipes-visible-{{ctrl.getSnipesVisible()}} caught-all-{{ctrl.getSnipesVisible()}}">
+        <span class="message lead snipes-revealed-{{ctrl.areSnipesRevealed()}}">
             &#9753; {{ctrl.getMessage()}} &#10087;
         </span>
     </div><!--
 
     --><div class="col-sm-3">
-        <button ng-click="ctrl.revealSnipes()" ng-disabled="ctrl.getSnipesVisible()" class="btn"
-                ng-class="ctrl.getSnipesVisible() ? 'btn-info' : (ctrl.getAvailableCages() === 0 ? 'btn-success' : 'btn-danger')">
+        <button ng-click="ctrl.revealSnipes()" ng-disabled="ctrl.areSnipesRevealed()" class="btn"
+                ng-class="ctrl.areSnipesRevealed() ? 'btn-info' :
+                (ctrl.getAvailableCages() === 0 ? 'btn-success' : 'btn-danger')">
             Reveal Snipes
             <br/>
             (Cages remaining: {{ctrl.getAvailableCages()}})
@@ -19,44 +20,62 @@
     </div>
 </div>
 
-<div class="grid fresh-game-{{ctrl.isFreshGame()}} snipes-visible-{{ctrl.getSnipesVisible()}}">
+<div class="grid snipes-revealed-{{ctrl.areSnipesRevealed()}}">
     <div class="row" ng-repeat="(rowNum, row) in ctrl.getGrid()">
         <div class="col-xs-1 grid-cell" ng-repeat="(colNum, cell) in row"
-        ng-class="colNum === 0 ? 'col-xs-offset-2' : ''">
+                ng-class="colNum === 0 ? 'col-xs-offset-2' : ''">
 
             <div ng-if="cell.isAField"
                 class="grid-cell-member field">
             </div>
 
             <div ng-repeat="(beamDirection, _) in cell.beams"
-                ng-if="ctrl.isTutorialMode()"
-                class="grid-cell-member beam beam-{{beamDirection}}">
+                class="grid-cell-member beam beam-{{beamDirection}} tutorial-mode-{{ctrl.isTutorialMode()}}">
             </div>
 
             <div ng-if="cell.isAField"
-                class="grid-cell-member snipe-{{cell.snipe}} visible-{{ctrl.getSnipesVisible()}}">
+                class="grid-cell-member snipe {{cell.snipe}} revealed-{{ctrl.areSnipesRevealed()}}">
             </div>
 
             <div ng-if="cell.isAField"
-                class="grid-cell-member tutorial-mode-{{ctrl.isTutorialMode()}} snipe-caused-hit-{{cell.snipeCausedHit}} snipe-caused-reflection-{{cell.snipeCausedReflection}} snipe-caused-redirection-{{cell.snipeCausedRedirection}}">
+                class="grid-cell-member tutorial-snipe snipe-caused-hit
+                {{cell.snipeCausedHit}} tutorial-mode-{{ctrl.isTutorialMode()}}">
             </div>
 
             <div ng-if="cell.isAField"
-                class="grid-cell-member cage-{{cell.cage}}">
+                class="grid-cell-member tutorial-snipe snipe-caused-reflection
+                {{cell.snipeCausedReflection}} tutorial-mode-{{ctrl.isTutorialMode()}}">
             </div>
 
             <div ng-if="cell.isAField"
-                class="grid-cell-member mark-{{cell.mark}}"
+                class="grid-cell-member tutorial-snipe snipe-caused-redirection
+                {{cell.snipeCausedRedirection}} tutorial-mode-{{ctrl.isTutorialMode()}}">
+            </div>
+
+            <div ng-if="cell.isAField"
+                class="grid-cell-member cage {{cell.cage}}">
+            </div>
+
+            <div ng-if="cell.isAField"
+                class="grid-cell-member mark {{cell.mark}}"
                 ng-click="ctrl.toggleCage(rowNum, colNum)"
                 ng-right-click="ctrl.toggleMark(rowNum, colNum)">
             </div>
 
             <div ng-if="cell.isALight"
-                class="grid-cell-member hit-{{cell.hit}} reflection-{{cell.reflection}} passed-through-{{cell.passedThrough}} link-id-{{cell.linkId}}">
+                class="grid-cell-member hit {{cell.hit}}">
             </div>
 
             <div ng-if="cell.isALight"
-                class="grid-cell-member used-{{cell.used}}"
+                class="grid-cell-member reflection {{cell.reflection}}">
+            </div>
+
+            <div ng-if="cell.isALight"
+                class="grid-cell-member passed-through {{cell.passedThrough}} link-id-{{cell.linkId}}">
+            </div>
+
+            <div ng-if="cell.isALight"
+                class="grid-cell-member used {{cell.used}}"
                 ng-click="ctrl.turnOnLight(rowNum, colNum)">
             </div>
 
@@ -72,7 +91,10 @@
     <li>Click on a question mark to explore the field.</li>
     <li>When you think you have found a snipe's hiding place, click on that square to place a cage.</li>
     <li>Or optionally right-click to add an X to squares you think are empty.</li>
-    <li>Once you have placed all your cages, <a href="#" ng-click="ctrl.revealSnipes()">reveal the snipes</a> to find out how you fared!</li>
+    <li>
+        Once you have placed all your cages,
+        <a href="#" ng-click="ctrl.revealSnipes()">reveal the snipes</a>
+        to find out how you fared!</li>
 </ul>
 
 <ul class="list-unstyled how-to-play">
@@ -80,14 +102,18 @@
         <a href="#" ng-click="ctrl.toggleTutorialMode()">Use tutorial mode</a>
         to learn how the question marks reveal hints about the snipes' locations.
     </li>
-    <li ng-if="ctrl.isTutorialMode()">(Tutorial mode is currently on.)</li>
-    <li ng-if="!ctrl.isTutorialMode()">(Tutorial mode is currently off.)</li>
+    <li ng-if="ctrl.isTutorialMode()">
+        (Tutorial mode is currently <a href="#" ng-click="ctrl.toggleTutorialMode()">on</a>.)
+    </li>
+    <li ng-if="!ctrl.isTutorialMode()">
+        (Tutorial mode is currently <a href="#" ng-click="ctrl.toggleTutorialMode()">off</a>.)
+    </li>
 </ul>
 
 <footer>
     <ul class="list-unstyled">
         <li><a href="http://github.com/mtdavis/snipehunt">View Source on GitHub.</a></li>
-        <li>Based on Snark Hunt, a game by Jeff Johannigman.</a>
+        <li>Based on Snark Hunt, a game by Jeff Johannigman.</li>
         <li><a href="http://shelzie.deviantart.com/gallery/824381">Dog Icons by shelzie.</a></li>
     </ul>
 </footer>
