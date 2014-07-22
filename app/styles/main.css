@@ -134,16 +134,6 @@ body
     opacity: 1;
 }
 
-.used.true
-{
-    opacity: 0;
-}
-
-.used.false
-{
-    opacity: 1;
-}
-
 .cage.true
 {
     background-repeat: no-repeat;
