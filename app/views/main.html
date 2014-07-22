@@ -77,6 +77,8 @@
             <div ng-if="cell.isALight"
                 class="grid-cell-member used {{cell.used}}"
                 ng-click="ctrl.turnOnLight(rowNum, colNum)">
+
+                <div ng-if="!cell.used" class="pointer"></div>
             </div>
 
             <div ng-if="cell.isEmpty"

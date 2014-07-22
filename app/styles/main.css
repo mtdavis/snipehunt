@@ -94,6 +94,7 @@ body
 .field          { background-image: url("../images/field.png"); }
 .hit            { background-image: url("../images/hit.png"); }
 .mark           { background-image: url("../images/mark.png"); }
+.pointer        { background-image: url("../images/pointer.png"); }
 .reflection     { background-image: url("../images/arrow.png"); }
 .snipe          { background-image: url("../images/snipe.png"); }
 .tutorial-snipe { background-image: url("../images/snipe.png"); }
@@ -178,6 +179,64 @@ body
     transform: rotate(270deg);
     -ms-transform: rotate(270deg);
     -webkit-transform: rotate(270deg);
+}
+
+/***** pointer icons. *****/
+
+.used.false .pointer
+{
+    display: none;
+}
+
+.used.false:hover .pointer
+{
+    display: inherit;
+
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    z-index:1;
+}
+
+.grid .row:first-child .pointer
+{
+    /* north side. */
+    top: 75%;
+}
+
+.grid .row .grid-cell:last-child .pointer
+{
+    /* east side. */
+    transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+
+    right: 75%;
+}
+
+.grid .row:last-child .pointer
+{
+    /* south side. */
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+
+    bottom: 75%;
+}
+
+.grid .row .grid-cell:first-child .pointer
+{
+    /* west side. */
+    transform: rotate(270deg) rotateY(180deg);
+    -ms-transform: rotate(270deg) rotateY(180deg);
+    -webkit-transform: rotate(270deg) rotateY(180deg);
+
+    left: 75%;
 }
 
 /***** messages. *****/
