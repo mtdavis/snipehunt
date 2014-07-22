@@ -67,7 +67,7 @@
             </div>
 
             <div ng-if="cell.isALight"
-                class="grid-cell-member reflection {{cell.reflection}}">
+                class="grid-cell-member reflection {{cell.reflection}} {{cell.side}}">
             </div>
 
             <div ng-if="cell.isALight"
@@ -75,10 +75,10 @@
             </div>
 
             <div ng-if="cell.isALight"
-                class="grid-cell-member used {{cell.used}}"
+                class="grid-cell-member used {{cell.used}} {{cell.side}}"
                 ng-click="ctrl.turnOnLight(rowNum, colNum)">
 
-                <div ng-if="!cell.used" class="pointer"></div>
+                <div class="pointer {{cell.side}}"></div>
             </div>
 
             <div ng-if="cell.isEmpty"

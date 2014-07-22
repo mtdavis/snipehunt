@@ -37,15 +37,15 @@ angular.module("snipehuntApp")
             //add the lights for the north and south rows.
             for(var col = 1; col < eastCol; col++)
             {
-                this.grid[northRow][col] = this.makeLight();
-                this.grid[southRow][col] = this.makeLight();
+                this.grid[northRow][col] = this.makeLight("north");
+                this.grid[southRow][col] = this.makeLight("south");
             }
 
             //add the lights for the west and east columns.
             for(var row = 1; row < southRow; row++)
             {
-                this.grid[row][westCol] = this.makeLight();
-                this.grid[row][eastCol] = this.makeLight();
+                this.grid[row][westCol] = this.makeLight("west");
+                this.grid[row][eastCol] = this.makeLight("east");
             }
 
             //add the field cells in the middle.
@@ -119,10 +119,11 @@ angular.module("snipehuntApp")
             return array;
         }
 
-        this.makeLight = function()
+        this.makeLight = function(side)
         {
             return {
                 isALight:true,
+                side:side,
                 used:false,
                 hit:false,
                 reflection:false,
