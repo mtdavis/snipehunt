@@ -13,6 +13,12 @@ angular.module("snipehuntApp")
         this.availableLinkIds = [];
         this.availableCages = 0;
 
+        /**
+         * Start a new game.
+         * @param height number of rows (including two columns for lights)
+         * @param width number of columns (including two columns for lights)
+         * @param snipes the number of snipes to hide in the grid
+         */
         this.startNewGame = function(height, width, snipes)
         {
             this.gridHeight = height;
@@ -119,6 +125,10 @@ angular.module("snipehuntApp")
             return array;
         }
 
+        /**
+         * Returns an object encapsulating the state of a light.
+         * @param side the side the light is on (north/south/east/west)
+         */
         this.makeLight = function(side)
         {
             return {
@@ -132,6 +142,9 @@ angular.module("snipehuntApp")
             };
         };
 
+        /**
+         * Turns on a light in the given position and sends a beam into the field.
+         */
         this.turnOnLight = function(rowNum, colNum)
         {
             var light = this.grid[rowNum][colNum];
@@ -189,6 +202,9 @@ angular.module("snipehuntApp")
             }
         };
 
+        /**
+         * Clear any tutorial beams or indicators.
+         */
         this.clearTutorialInfo = function()
         {
             for(var row = 1; row < this.gridHeight - 1; row++)
@@ -204,6 +220,10 @@ angular.module("snipehuntApp")
             }
         };
 
+        /**
+         * Move a beam through the field, bouncing off the corners of snipes,
+         * until the beams hits a snipe or exits the field.
+         */
         this.resolveBeam = function(beam)
         {
             var resolved = false;
@@ -261,6 +281,9 @@ angular.module("snipehuntApp")
             }
         };
 
+        /**
+         * Determine the next state of a beam currently moving horizontally.
+         */
         this.iterateBeamMovingHorizontally = function(beam)
         {
             var resolved = false;
@@ -327,6 +350,9 @@ angular.module("snipehuntApp")
             return resolved;
         };
 
+        /**
+         * Determine the next state of a beam currently moving vertically.
+         */
         this.iterateBeamMovingVertically = function(beam)
         {
             var resolved = false;
@@ -395,6 +421,10 @@ angular.module("snipehuntApp")
             return resolved;
         };
 
+        /**
+         * A beam exited the field in a different location than it started;
+         * update the two lights accordingly to indicate they're linked.
+         */
         this.registerPassthrough = function(firstLight, secondLight)
         {
             var linkId = this.availableLinkIds[0];
@@ -408,6 +438,9 @@ angular.module("snipehuntApp")
             secondLight.linkId = linkId;
         };
 
+        /**
+         * Add or remove a cage at the given location.
+         */
         this.toggleCage = function(rowNum, colNum)
         {
             if(!this.snipesRevealed)
@@ -427,6 +460,9 @@ angular.module("snipehuntApp")
             }
         };
 
+        /**
+         * Add or remove a mark (X) at the given location.
+         */
         this.toggleMark = function(rowNum, colNum)
         {
             if(!this.snipesRevealed)
@@ -442,6 +478,9 @@ angular.module("snipehuntApp")
             }
         };
 
+        /**
+         * Reveal the locations of the snipes.
+         */
         this.revealSnipes = function()
         {
             this.snipesRevealed = true;
@@ -469,6 +508,9 @@ angular.module("snipehuntApp")
             }
         };
 
+        /**
+         * Turn tutorial mode on or off.
+         */
         this.toggleTutorialMode = function()
         {
             this.tutorialMode = !this.tutorialMode;
